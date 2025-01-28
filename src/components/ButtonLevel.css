@@ -1,0 +1,76 @@
+.button {
+    text-align: center;
+    border: 6px solid #000000bf;
+    padding: 12px 0;
+    position: relative;
+    border-radius: 60px;
+    -webkit-box-shadow:  rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    -moz-box-shadow:  rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    background-color: white;
+}
+
+.circle-left {
+    position: absolute;
+    width: 61px;
+    height: 61px;
+    border: 6px solid #000000bf;
+    top: -6px;
+    left: -6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+}
+.circle-right {
+    position: absolute;
+    width: 61px;
+    height: 61px;
+    border: 6px solid #000000bf;
+    top: -6px;
+    right: -6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+}
+
+.circle-left.easy {
+    background: radial-gradient(#f0f3ee, #A8E6CF);
+}
+.circle-right.easy {
+    background: radial-gradient(#f0f3ee, #A8E6CF);
+}
+.circle-left.medium {
+    background: radial-gradient(#f0f3ee, #FFD97D);
+
+}
+.circle-right.medium {
+    background: radial-gradient(#f0f3ee, #FFD97D);
+}
+.circle-left.hard {
+    background: radial-gradient(#f0f3ee, #FF8B94);
+}
+.circle-right.hard {
+    background: radial-gradient(#f0f3ee, #FF8B94);
+}
+.circle-left.all {
+    background: radial-gradient(#f0f3ee, #85C7F2);
+}
+.circle-right.all {
+    background: radial-gradient(#f0f3ee, #85C7F2);
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: #000000bf;
+    border-radius: 100%;
+}
+
+.button a {
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bold;
+    color: #000000bf;
+}

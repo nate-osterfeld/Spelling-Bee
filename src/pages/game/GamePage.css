@@ -1,0 +1,126 @@
+/* Nav Section (already defined from HomePage.css) */
+.game__bee-logo {
+    height: 100px;
+}
+
+/* END Nav Section */
+/* Main Section */
+
+.game__main-section {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 5vh; /* NOTE: Padding doesn't do anything except allow room for scrolling if wanted (there's nothing under main, just extends space) */
+}
+
+.game__main-wrapper {
+    width: 80%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.game__top {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.game__tries {
+    /* margin-left: auto;
+    padding-right: 22px;
+    padding-bottom: 22px; */
+    font-size: 25px;
+    text-align: center;
+    padding-top: 30px;
+    color: #000000bf;
+}
+
+.game__h1 {
+    color: #000000bf;
+    font-size: 56px;
+    text-align: center;
+    letter-spacing: -3px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 25px;
+}
+
+.game__speaker-icon {
+    height: 80px;
+    width: 80px;
+    filter: invert(70%) sepia(7%) saturate(2746%) hue-rotate(174deg) brightness(92%) contrast(90%);
+    -webkit-box-shadow:  rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    -moz-box-shadow:  rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+.game__form {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game__label {
+    text-decoration: none;
+    letter-spacing: 0px;
+    font-weight: bold;
+    color: #000000bf;
+    font-size: 25px;
+    text-align: center;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.game__input {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    font-size: 25px;
+    background-color: #f0f3ee;
+    padding-bottom: 5px;
+    border: none;
+    border-bottom: 2px solid #000000bf;
+    outline: none;
+    caret-color: transparent;
+    margin-bottom: 10%;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+/* 
+Add "check spelling" button in user settings (future)
+.game__form button {
+    padding: 16px 32px;
+    font-size: 13px;
+    font-weight: bold;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    background-color: #4e7893;
+    color: #e5f5ff;
+    border: none;
+    transition: background-color 0.3s ease;
+} */
+
+/* Animations */
+.wrong {
+    color: #f98790;
+    letter-spacing: -.25px;
+}
+.correct {
+    color: #67e52a;
+    letter-spacing: 8px;
+}
+

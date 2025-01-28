@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="home.css" />
+		<title>Home</title>
+	</head>
+	<style>
+		body {
+			margin: 0;
+		}
+
+		main {
+			width: 100%;
+		}
+
+		header {
+			display: flex;
+			justify-content: center;
+		}
+
+		nav {
+			width: 80%;
+			max-width: 900px;
+			display: flex;
+			justify-content: space-between;
+			padding: 1rem;
+		}
+
+		/* TITLE SECTION */
+
+		.title-section {
+			display: flex;
+			justify-content: center;
+			margin: 52px 0;
+		}
+
+		.title-section h1 {
+			font-size: 42px;
+		}
+		.title-section p {
+			font-size: 28px;
+			text-align: center;
+		}
+
+		.title-container {
+			width: 80%;
+			max-width: 900px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		/* DIFFICULTY SECTION */
+
+		.difficulty-section {
+			display: flex;
+			justify-content: center;
+		}
+
+		.difficulty-container {
+			width: 70%;
+			max-width: 900px;
+		}
+
+		.difficulty-container button {
+			border: 1px solid black;
+			font-size: 32px;
+			text-align: center;
+			display: block;
+			width: 100%;
+			padding: 20px 0;
+			margin-bottom: 5%;
+		}
+
+		.easy {
+			background-color: greenyellow;
+		}
+		.medium {
+			background-color: yellow;
+		}
+		.hard {
+			background-color: red;
+		}
+		.all {
+			background-color: lightblue;
+		}
+	</style>
+	<body>
+		<header>
+			<nav>
+				<div>logo</div>
+				<div>profile</div>
+			</nav>
+		</header>
+
+		<main>
+			<!-- Title Section -->
+			<div class="title-section">
+				<div class="title-container">
+					<h1>Spelling Bee</h1>
+					<p>Choose a difficulty level to get started</p>
+				</div>
+			</div>
+
+			<!-- Difficulty Section -->
+			<div class="difficulty-section">
+				<div class="difficulty-container">
+					<button class="easy">Easy</button>
+					<button class="medium">Medium</button>
+					<button class="hard">Hard</button>
+					<button class="all">All</button>
+				</div>
+			</div>
+		</main>
+	</body>
+</html>
