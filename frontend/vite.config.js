@@ -6,7 +6,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
 	plugins: [react()],
 	server: {
-		host: '0.0.0.0', // uses computer's IP, e.g. '192.168.86.162'
+		host: '0.0.0.0', // uses computer's IP, e.g. '192.168.86.162' to access on phone or other device
 	},
 	build: {
 		rollupOptions: {
