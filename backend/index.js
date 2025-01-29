@@ -1,6 +1,7 @@
+require('dotenv').config
 const express = require('express')
+const q = require('./queries')
 
-const port = 8800
 const app = express()
 
 app.use(express.json())
@@ -10,6 +11,9 @@ app.get('/', (req, res) => {
     return res.json('This route works')
 })
 
-app.listen(port, () => {
-    console.log('Express server listening on port: ', port)
+app.get('/users', q.getUsers)
+
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+    console.log('Express server listening on port: ', PORT)
 })
