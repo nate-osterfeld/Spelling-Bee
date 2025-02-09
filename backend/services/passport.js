@@ -3,35 +3,52 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy
 const keys = require('../config/keys.js')
 const pool = require('../db.js')
 
+// Configure Passport to use Google OAuth strategy
 passport.use(
 	new GoogleStrategy(
 		{
-			clientID: keys.GOOGLE_CLIENT_ID,
-			clientSecret: keys.GOOGLE_CLIENT_SECRET,
-			callbackURL: '/auth/google/callback',
+			clientID: keys.GOOGLE_CLIENT_ID, // Google OAuth client ID
+			clientSecret: keys.GOOGLE_CLIENT_SECRET, // Google OAuth client secret
+			callbackURL: '/auth/google/callback', // Callback route after authentication
 		},
-        async (accessToken, refreshToken, profile, done) => {
-            // google info
-            const values = [profile.id, profile.displayName, profile.emails[0].value]
+		// On initial login
+		async (accessToken, refreshToken, profile, done) => {
+			// Extract user info from Google profile
+			const values = [profile.id, profile.displayName, profile.emails[0].value]
 
-            // select/insert queries
-            const query_selectUser = 'SELECT * FROM users WHERE google_id = $1'
-            const query_insertUser = 'INSERT INTO users (google_id, name, email) VALUES ($1, $2, $3)'
+			// SQL queries to check if user exists and insert if new
+			const query_selectUser = 'SELECT * FROM users WHERE google_id = $1'
+			const query_insertUser =
+				'INSERT INTO users (google_id, name, email) VALUES ($1, $2, $3)'
 
-            // select user
-            let userResults = await pool.query(query_selectUser, [profile.id])
-            
-            // if user exists -> done(user)
-            if (userResults.rows.length) {
-                const user = userResults.rows[0]
-                done(null, user)
-            // else insert user -> select user -> done(user)
-            } else {
-                await pool.query(query_insertUser, values)
-                userResults = await pool.query(query_selectUser, [profile.id])
-                const user = userResults.rows[0]
-                done(null, user)
-            }
-        }
-	)
+			// Check if user already exists in the database
+			let userResults = await pool.query(query_selectUser, [profile.id])
+
+			if (userResults.rows.length) {
+				// If user exists, retrieve user and complete authentication
+				const user = userResults.rows[0]
+				done(null, user)
+			} else {
+				// If user does not exist, insert them into database
+				await pool.query(query_insertUser, values)
+				userResults = await pool.query(query_selectUser, [profile.id])
+				const user = userResults.rows[0]
+				done(null, user) // Complete authentication with new user
+			}
+		},
+	),
 )
+
+// Set-cookie as user.id in response header (user taken from oauth callback)
+passport.serializeUser((user, done) => {
+	done(null, user.id) // set user.id as cookie in response
+})
+
+// Deserialize user by retrieving them from database with id found in cookie (attach to req object)
+passport.deserializeUser(async (id, done) => {
+		const query_selectUser = 'SELECT * FROM users WHERE id = $1'
+		const results = await pool.query(query_selectUser, [id])
+
+		const user = results.rows[0]
+		done(null, user) // Pass user object to request
+})
