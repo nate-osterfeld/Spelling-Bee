@@ -72,6 +72,24 @@ app.post('/api/register', async (req, res) => {
 	}
 })
 
+app.post('/api/login', async (req, res) => {
+	const query_selectUserByEmail = 'SELECT * FROM users WHERE email = $1'
+	const user = await pool.query(query_selectUserByEmail, [req.body.email])
+	const { password, salt } = user.rows[0]
+
+	if (user.rowCount === 1) {
+		const isValid = utils.verifyPassword(req.body.password, password, salt)
+
+		if (isValid) {
+			res.json({ success: true, message: 'User logged in' })
+		} else {
+			res.json({ success: false, message: 'Wrong username or password' })
+		}
+	} else {
+		res.json({ success: false, message: 'User not found' })
+	}
+})
+
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
 	console.log('Express server listening on port: ', PORT)

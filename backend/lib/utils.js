@@ -10,4 +10,10 @@ function genPassword(password) {
     }
 }
 
+function verifyPassword(password, hash, salt) {
+    const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex')
+    return hash === hashVerify
+}
+
 module.exports.genPassword = genPassword
+module.exports.verifyPassword = verifyPassword
