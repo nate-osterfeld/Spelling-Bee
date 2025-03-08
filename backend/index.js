@@ -42,6 +42,11 @@ app.get('/test_cookie', (req, res) => {
 	res.send(req.user)
 })
 
+app.get('/api/logout', (req, res) => {
+	req.logout()
+	res.send(req.user)
+})
+
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
 	console.log('Express server listening on port: ', PORT)
