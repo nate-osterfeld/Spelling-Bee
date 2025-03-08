@@ -44,6 +44,10 @@ app.get('/test_cookie', (req, res) => {
 	res.send(req.user)
 })
 
+app.get('/api/test-jwt', utils.authMiddleware, (req, res) => {
+	res.status(200).json({ success: true, message: 'You are successfully authenticated to visit this route' })
+})
+
 app.get('/api/logout', (req, res) => {
 	req.logout()
 	res.send(req.user)
