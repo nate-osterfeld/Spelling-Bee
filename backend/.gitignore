@@ -8,6 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+id_rsa_priv.pem
 *.local
 .env
 keys.js
