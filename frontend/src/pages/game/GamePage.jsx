@@ -1,6 +1,6 @@
 import './GamePage.css'
 import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import words from '@/words.js'
 import { spellCorrect } from '@/utils/spellCorrect.js'
 import { Keyboard } from '@/components/Keyboard.jsx'
@@ -122,17 +122,6 @@ function GamePage() {
 
 	return (
 		<>
-			<nav>
-				<Link to='/'>
-					<img className='game__bee-logo' src='/assets/bee-logo.png' alt='logo' />
-				</Link>
-				<div className='hamburger-menu'>
-					<div></div>
-					<div></div>
-					<div></div>
-				</div>
-			</nav>
-
 			<main className='game__main-section'>
 				<div className='game__main-wrapper'>
 					<div className='game__top'>
