@@ -50,7 +50,7 @@ app.get('/api/logout', (req, res) => {
 })
 
 app.post('/api/register', async (req, res) => {
-	const query_selectUserByEmail = 'SELECT email, acc_type FROM users WHERE email = $1'
+	const query_selectUserByEmail = 'SELECT * FROM users WHERE email = $1'
 	let { rows } = await pool.query(query_selectUserByEmail, [req.body.email])
 
 	if (rows.length === 0) {
@@ -75,15 +75,21 @@ app.post('/api/register', async (req, res) => {
 app.post('/api/login', async (req, res) => {
 	const query_selectUserByEmail = 'SELECT * FROM users WHERE email = $1'
 	const user = await pool.query(query_selectUserByEmail, [req.body.email])
-	const { password, salt } = user.rows[0]
-
+	
 	if (user.rowCount === 1) {
+		const { id, password, salt } = user.rows[0]
 		const isValid = utils.verifyPassword(req.body.password, password, salt)
 
 		if (isValid) {
-			res.json({ success: true, message: 'User logged in' })
+			const { token, expiresIn } = utils.issueJWT(id)
+			
+			res.status(200).json({
+				success: true,
+				token,
+				expiresIn
+			})
 		} else {
-			res.json({ success: false, message: 'Wrong username or password' })
+			res.json({ success: false, message: 'Entered invalid password' })
 		}
 	} else {
 		res.json({ success: false, message: 'User not found' })
