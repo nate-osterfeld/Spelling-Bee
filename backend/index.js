@@ -5,6 +5,8 @@ const passport = require('passport')
 require('./services/passport.js')
 const q = require('./queries')
 const keys = require('./config/keys.js')
+const pool = require('./db.js')
+const utils = require('./lib/utils.js')
 
 const app = express()
 
@@ -45,6 +47,29 @@ app.get('/test_cookie', (req, res) => {
 app.get('/api/logout', (req, res) => {
 	req.logout()
 	res.send(req.user)
+})
+
+app.post('/api/register', async (req, res) => {
+	const query_selectUserByEmail = 'SELECT email, acc_type FROM users WHERE email = $1'
+	let { rows } = await pool.query(query_selectUserByEmail, [req.body.email])
+
+	if (rows.length === 0) {
+		const { salt, hash } = utils.genPassword(req.body.password)
+
+		const query_saveUser = 'INSERT INTO users (email, password, salt, acc_type) VALUES ($1, $2, $3, $4)'
+		const { rowCount } = await pool.query(query_saveUser, [req.body.email, hash, salt, 'email'])
+
+		if (rowCount === 1) {
+			const query_selectUser = 'SELECT * FROM users WHERE email = $1'
+			const user = await pool.query(query_selectUser, [req.body.email])
+
+			res.status(200).json({ success: true, user: user.rows[0] })
+		} else {
+			res.json({ success: false, message: 'Unable to save user' })
+		}
+	} else {
+		res.json({ success: false, message: 'User with email already exists' })
+	}
 })
 
 const PORT = process.env.PORT || 3000
