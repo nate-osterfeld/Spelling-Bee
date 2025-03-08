@@ -37,12 +37,19 @@ app.get(
 	}),
 )
 
-app.get('/auth/google/callback', passport.authenticate('google'))
+app.get('/auth/google/callback', passport.authenticate('google', { session: false }), (req, res) => {
+	const { token, expiresIn } = utils.issueJWT(req.user.id)
 
-app.get('/test_cookie', (req, res) => {
-	console.log('test', req.user)
-	res.send(req.user)
+	res.status(200).json({
+		success: true,
+		token,
+		expiresIn,
+	})
 })
+
+// app.get('/test_cookie', (req, res) => {
+// 	res.send(req.user)
+// })
 
 app.get('/api/test-jwt', utils.authMiddleware, (req, res) => {
 	res.status(200).json({ success: true, message: 'You are successfully authenticated to visit this route' })

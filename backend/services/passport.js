@@ -13,42 +13,41 @@ passport.use(
 		},
 		// On initial login
 		async (accessToken, refreshToken, profile, done) => {
-			// Extract user info from Google profile
-			const values = [profile.id, profile.displayName, profile.emails[0].value]
-
 			// SQL queries to check if user exists and insert if new
 			const query_selectUser = 'SELECT * FROM users WHERE google_id = $1'
 			const query_insertUser =
-				'INSERT INTO users (google_id, name, email) VALUES ($1, $2, $3)'
-
+			'INSERT INTO users (google_id, email, acc_type) VALUES ($1, $2, $3)'
+			
 			// Check if user already exists in the database
 			let userResults = await pool.query(query_selectUser, [profile.id])
-
+			
+			let user;
 			if (userResults.rows.length) {
 				// If user exists, retrieve user and complete authentication
-				const user = userResults.rows[0]
-				done(null, user)
+				user = userResults.rows[0]
 			} else {
 				// If user does not exist, insert them into database
+				const values = [profile.id, profile.emails[0].value, 'auth']
 				await pool.query(query_insertUser, values)
 				userResults = await pool.query(query_selectUser, [profile.id])
-				const user = userResults.rows[0]
-				done(null, user) // Complete authentication with new user
+				user = userResults.rows[0]
 			}
+
+			done(null, user)
 		},
 	),
 )
 
 // Set-cookie as user.id in response header (user taken from oauth callback)
-passport.serializeUser((user, done) => {
-	done(null, user.id) // set user.id as cookie in response
-})
+// passport.serializeUser((user, done) => {
+// 	done(null, user.id) // set user.id as cookie in response
+// })
 
-// Deserialize user by retrieving them from database with id found in cookie (attach to req object)
-passport.deserializeUser(async (id, done) => {
-		const query_selectUser = 'SELECT * FROM users WHERE id = $1'
-		const results = await pool.query(query_selectUser, [id])
+// // Deserialize user by retrieving them from database with id found in cookie (attach to req object)
+// passport.deserializeUser(async (id, done) => {
+// 	const query_selectUser = 'SELECT * FROM users WHERE id = $1'
+// 	const results = await pool.query(query_selectUser, [id])
 
-		const user = results.rows[0]
-		done(null, user) // Pass user object to request
-})
+// 	const user = results.rows[0]
+// 	done(null, user) // Pass user object to request
+// })
