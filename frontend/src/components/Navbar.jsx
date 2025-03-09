@@ -9,6 +9,7 @@ import HamburgerMenu from './Hamburger'
 function Navbar() {
 	const [showDropdown, setShowDropdown] = useState(false)
 	const [showSignup, setShowSignup] = useState(false)
+	const [showSignin, setShowSignin] = useState(true)
 
 	return (
 		<>
@@ -18,10 +19,10 @@ function Navbar() {
 				</Link>
 				<div className='hamburger-menu'>
 					<HamburgerMenu
-						setShowDropdown={setShowDropdown}
 						showDropdown={showDropdown}
+						setShowDropdown={setShowDropdown}
 						setShowSignup={setShowSignup}
-						showSignup={showSignup}
+						setShowSignin={setShowSignin}
 					/>
 				</div>
 			</nav>
@@ -44,7 +45,7 @@ function Navbar() {
 						</button>
 						<div className='signup__account'>
 							<div>Already have an account?</div>
-							<div>Sign in</div>
+							<div onClick={() => setShowSignin(true)}>Sign in</div>
 						</div>
 						<p className='signup__terms'>
 							Click “Sign up” to agree to SpeeBee's{' '}
@@ -65,30 +66,96 @@ function Navbar() {
 				<div className='signup-container'>
 					<div className='signup'>
 						<button className='signup__back' onClick={() => setShowSignup(false)}>
-							<img src={back_icon} alt="Back Icon" />
+							<img src={back_icon} alt='Back Icon' />
 						</button>
 						<div className='signup__header2'>Sign up with email</div>
-						<p className='signup__ptext'>Enter your email address and password to create an account.</p>
-						<form>
-							<label htmlFor=''>Email</label>
-							<input className='signup__input' type='text' required />
+						<p className='signup__ptext'>
+							Enter your email address and password to create an account.
+						</p>
 
-							<label htmlFor=''>Password</label>
+						<form action='http://localhost:8800/api/register' method='POST'>
+							<label>Email</label>
+							<input name='email' className='signup__input' type='text' required />
+
+							<label>Password</label>
+							<input
+								name='password'
+								className='signup__input'
+								type='password'
+								required
+							/>
+
+							<label>Password</label>
 							<input className='signup__input' type='password' required />
 
-							<label htmlFor=''>Password</label>
-							<input className='signup__input' type='password' required />
-
-							<button className='signup__submit' type='submit'>Submit</button>
+							<button className='signup__submit' type='submit'>
+								Submit
+							</button>
 						</form>
 
 						<p className='signup__terms'>
 							This site is protected by reCAPTCHA Enterprise and the{' '}
-							<a href='https://policies.google.com/privacy' rel='noopener follow' target='_blank'>
+							<a
+								href='https://policies.google.com/privacy'
+								rel='noopener follow'
+								target='_blank'
+							>
 								Google Privacy Policy
 							</a>{' '}
 							and{' '}
-							<a href='https://policies.google.com/terms' rel='noopener follow' target='_blank'>
+							<a
+								href='https://policies.google.com/terms'
+								rel='noopener follow'
+								target='_blank'
+							>
+								Terms of Service
+							</a>{' '}
+							apply.
+						</p>
+					</div>
+				</div>
+			)}
+
+			{showSignin && (
+				<div className='signup-container'>
+					<div className='signup'>
+						<button className='signup__back' onClick={() => setShowSignin(false)}>
+							<img src={back_icon} alt='Back Icon' />
+						</button>
+						<div className='signup__header2'>Sign into SpeeBee</div>
+
+						<form action='http://localhost:8800/api/login' method='POST'>
+							<label>Email</label>
+							<input name='email' className='signup__input' type='text' required />
+
+							<label>Password</label>
+							<input
+								name='password'
+								className='signup__input'
+								type='password'
+								required
+							/>
+
+							<button className='signup__submit' type='submit'>
+								Submit
+							</button>
+						</form>
+
+						<p className='signup__terms'>
+							This site is protected by reCAPTCHA Enterprise and the{' '}
+							<a
+								href='https://policies.google.com/privacy'
+								rel='noopener follow'
+								target='_blank'
+							>
+								Google Privacy Policy
+							</a>{' '}
+							and{' '}
+							<a
+								href='https://policies.google.com/terms'
+								rel='noopener follow'
+								target='_blank'
+							>
 								Terms of Service
 							</a>{' '}
 							apply.

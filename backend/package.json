@@ -12,6 +12,7 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "cookie-session": "^2.1.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

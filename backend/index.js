@@ -10,6 +10,7 @@ const utils = require('./lib/utils.js')
 
 const app = express()
 
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use(
@@ -71,10 +72,10 @@ app.post('/api/register', async (req, res) => {
 		const { rowCount } = await pool.query(query_saveUser, [req.body.email, hash, salt, 'email'])
 
 		if (rowCount === 1) {
-			const query_selectUser = 'SELECT * FROM users WHERE email = $1'
-			const user = await pool.query(query_selectUser, [req.body.email])
+			// const query_selectUser = 'SELECT * FROM users WHERE email = $1'
+			// const user = await pool.query(query_selectUser, [req.body.email])
 
-			res.status(200).json({ success: true, user: user.rows[0] })
+			res.redirect('http://localhost:5173?registration=successful')
 		} else {
 			res.json({ success: false, message: 'Unable to save user' })
 		}
@@ -93,17 +94,20 @@ app.post('/api/login', async (req, res) => {
 
 		if (isValid) {
 			const { token, expiresIn } = utils.issueJWT(id)
-			
-			res.status(200).json({
-				success: true,
-				token,
-				expiresIn
+
+			res.cookie("jwt", token, {
+				httpOnly: true,
+				// secure: true,
+				sameSite: 'Lax',
+				expires: expiresIn * 1000
 			})
+
+			res.redirect('http://localhost:5173/?sign-in-successful')
 		} else {
-			res.json({ success: false, message: 'Entered invalid password' })
+			res.redirect('http://localhost:5173/?failed-login') // invalid password
 		}
 	} else {
-		res.json({ success: false, message: 'User not found' })
+		res.redirect('http://localhost:5173/?failed-login') // unknown email
 	}
 })
 

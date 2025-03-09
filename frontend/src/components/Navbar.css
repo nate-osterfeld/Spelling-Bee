@@ -59,6 +59,7 @@ nav {
     gap: 1rem;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 10px 0px;
     border-radius: 4px;
+    position: relative;
 }
 .signup__header {
     color: #000000bf;
@@ -129,6 +130,9 @@ button.signup__method img {
     cursor: pointer;
     margin-right: auto;
     margin-left: 10px;
+    position: absolute;
+    top: 30px;
+    left: 30px;
 }
 .signup__back img {
     height: 20px;
@@ -139,7 +143,7 @@ button.signup__method img {
     font-size: 32px;
     text-align: center;
     letter-spacing: 0px;
-    margin: 0;
+    margin-top: 10%;
     height: 15%;
     display: flex;
     align-items: center;
