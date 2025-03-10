@@ -3,6 +3,7 @@ const express = require('express')
 const session = require('cookie-session')
 const passport = require('passport')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 require('./services/passport.js')
 const q = require('./queries.js')
 const keys = require('./config/keys.js')
@@ -14,6 +15,7 @@ const app = express()
 app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(cookieParser())
 
 app.use(
 	session({
@@ -54,8 +56,12 @@ app.get('/auth/google/callback', passport.authenticate('google', { session: fals
 // 	res.send(req.user)
 // })
 
-app.get('/api/test-jwt', utils.authMiddleware, (req, res) => {
-	res.status(200).json({ success: true, message: 'You are successfully authenticated to visit this route' })
+app.get('/api/current-user', utils.authMiddleware, (req, res) => {
+	if (req.user) {
+		res.status(200).json({ signedIn: true, ...req.user })
+	} else {
+		res.status(200).json({ signedIn: false })
+	}
 })
 
 app.get('/api/logout', (req, res) => {
@@ -72,11 +78,7 @@ app.post('/api/register', async (req, res) => {
 
 		const query_saveUser = 'INSERT INTO users (email, password, salt, acc_type) VALUES ($1, $2, $3, $4)'
 		const { rowCount } = await pool.query(query_saveUser, [req.body.email, hash, salt, 'email'])
-
 		if (rowCount === 1) {
-			// const query_selectUser = 'SELECT * FROM users WHERE email = $1'
-			// const user = await pool.query(query_selectUser, [req.body.email])
-
 			res.redirect('http://localhost:5173?registration=successful')
 		} else {
 			res.json({ success: false, message: 'Unable to save user' })
@@ -95,7 +97,7 @@ app.post('/api/login', async (req, res) => {
 		const isValid = utils.verifyPassword(req.body.password, password, salt)
 
 		if (isValid) {
-			const { token, expiresIn } = utils.issueJWT(id)
+			const { token, expiresIn } = utils.issueJWT(id) // serialize user with id
 
 			res.cookie("jwt", token, {
 				httpOnly: true,

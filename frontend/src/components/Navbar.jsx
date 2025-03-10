@@ -9,7 +9,7 @@ import HamburgerMenu from './Hamburger'
 function Navbar() {
 	const [showDropdown, setShowDropdown] = useState(false)
 	const [showSignup, setShowSignup] = useState(false)
-	const [showSignin, setShowSignin] = useState(true)
+	const [showSignin, setShowSignin] = useState(false)
 
 	return (
 		<>
@@ -26,6 +26,7 @@ function Navbar() {
 					/>
 				</div>
 			</nav>
+			
 			{showDropdown && (
 				<div className='signup-container'>
 					<div className='signup'>

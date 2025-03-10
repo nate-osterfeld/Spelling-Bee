@@ -6,7 +6,7 @@ export const authApi = createApi({
     endpoints: (builder) => ({
         getCurrentUser: builder.query({
             query: () => ({
-                url: '/api/test-jwt',
+                url: '/api/current-user',
                 method: 'GET',
                 credentials: 'include'
             })

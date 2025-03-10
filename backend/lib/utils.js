@@ -2,6 +2,7 @@ const crypto = require('crypto')
 const jsonwebtoken = require('jsonwebtoken')
 const fs = require('fs')
 const path = require('path')
+const pool = require('../db.js')
 
 const pathToPrivKey = path.join(__dirname, '..', 'id_rsa_priv.pem')
 const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem')
@@ -9,54 +10,63 @@ const PRIV_KEY = fs.readFileSync(pathToPrivKey, 'utf8')
 const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf8')
 
 function genPassword(password) {
-    const salt = crypto.randomBytes(32).toString('hex')
-    const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex')
+	const salt = crypto.randomBytes(32).toString('hex')
+	const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex')
 
-    return {
-        salt,
-        hash
-    }
+	return {
+		salt,
+		hash,
+	}
 }
 
 function verifyPassword(password, hash, salt) {
-    const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex')
-    return hash === hashVerify
+	const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex')
+	return hash === hashVerify
 }
 
 function issueJWT(id) {
-    const expiresIn = '1d'
-    
-    const payload = {
-        sub: id,
-        iat: Date.now()
-    }
+	const expiresIn = '1d'
 
-    const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, {
-        expiresIn,
-        algorithm: 'RS256'
-    })
+	const payload = {
+		sub: id,
+		iat: Date.now(),
+	}
 
-    return {
-        token: 'Bearer ' + signedToken,
-        expiresIn
-    }
+	const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, {
+		expiresIn,
+		algorithm: 'RS256',
+	})
+
+	return {
+		token: 'Bearer ' + signedToken,
+		expiresIn,
+	}
 }
 
-function authMiddleware(req, res, next) {
-    const tokenParts = req.headers.authorization.split(' ')
+// Attach user to request object
+async function authMiddleware(req, res, next) {
+	if (req.cookies.jwt) {
+		const tokenParts = req.cookies.jwt.split(' ')
 
-    if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
-        try {
-            const verification = jsonwebtoken.verify(tokenParts[1], PUB_KEY, {
-                algorithms: ['RS256']
-            })
+		if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
+			try {
+				const verification = jsonwebtoken.verify(tokenParts[1], PUB_KEY, {
+					algorithms: ['RS256'],
+				})
 
-            req.jwt = verification
-            next()
-        } catch (err) {
-            res.status(401).json({ success: false, message: 'You are not authorized to visit this route' })
-        }
+                const query_selectUserById = 'SELECT id, email, google_id, name FROM users WHERE id = $1'
+                const user = await pool.query(query_selectUserById, [verification.sub])
+
+                req.user = user.rows[0]
+			} catch (err) {
+				res.status(401).json({
+					success: false,
+					message: 'You are not authorized to visit this route',
+				})
+			}
+		}
     }
+    next()
 }
 
 module.exports.genPassword = genPassword
