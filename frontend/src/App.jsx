@@ -1,5 +1,6 @@
 import './App.css'
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { useGetCurrentUserQuery } from './services/authSlice.js'
 import HomePage from './pages/home/HomePage'
 import GamePage from './pages/game/GamePage'
 import { Keyboard } from './components/Keyboard'
@@ -19,6 +20,9 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+  const { data, error, isLoading } = useGetCurrentUserQuery()
+  console.log('user', data)
+  
   return (
     <>
       <RouterProvider router={router} />

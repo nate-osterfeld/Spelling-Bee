@@ -88,7 +88,8 @@ a.signup__method img {
 }
 button.signup__method img {
     height: 28px;
-    transform: translate(-3px, -4.5px);
+    transform: translate(10.5px, -4.5px);
+    margin-left: -14px;
 }
 .signup__method > div {
     height: 28px;
