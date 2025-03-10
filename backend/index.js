@@ -2,14 +2,16 @@ require('dotenv').config
 const express = require('express')
 const session = require('cookie-session')
 const passport = require('passport')
+const cors = require('cors')
 require('./services/passport.js')
-const q = require('./queries')
+const q = require('./queries.js')
 const keys = require('./config/keys.js')
 const pool = require('./db.js')
 const utils = require('./lib/utils.js')
 
 const app = express()
 
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
