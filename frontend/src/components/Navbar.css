@@ -35,7 +35,7 @@ nav {
 }
 
 /* END NAVBAR */
-/* BEG SIGNUP SCREEN 1 */
+/* BEG SIGNUP */
 
 .signup-container {
     position: absolute;
@@ -123,8 +123,8 @@ button.signup__method img {
     color: inherit;
 }
 
-/* END SIGNUP SCREEN 1 */
-/* BEG SIGNUP SCREEN 2 */
+/* END SIGNUP */
+/* BEG SIGNIN */
 
 .signup__back {
     all: unset;
@@ -189,4 +189,14 @@ button.signup__submit {
     color: white;
     border-radius: 1000px;
     margin-top: 50px;
+}
+
+/* END SIGNIN */
+/* BEG ACCOUNT */
+
+.signup__signout {
+    cursor: pointer;
+    color: #0b77bd;
+    font-weight: bold;
+    text-decoration: none;
 }

@@ -45,7 +45,7 @@ function issueJWT(id) {
 
 // Attach user to request object
 async function authMiddleware(req, res, next) {
-	if (req.cookies.jwt) {
+    if (req.cookies.jwt) {
 		const tokenParts = req.cookies.jwt.split(' ')
 
 		if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {

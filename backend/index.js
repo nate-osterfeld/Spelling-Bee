@@ -64,9 +64,9 @@ app.get('/api/current-user', utils.authMiddleware, (req, res) => {
 	}
 })
 
-app.get('/api/logout', (req, res) => {
-	req.logout()
-	res.send(req.user)
+app.post('/api/logout', utils.authMiddleware, (req, res) => {
+	res.clearCookie('jwt', { httpOnly: true, sameSite: 'lax' })
+	res.status(200).json({ success: true, message: 'Logged out' })
 })
 
 app.post('/api/register', async (req, res) => {

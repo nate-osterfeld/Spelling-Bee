@@ -7,6 +7,13 @@ import { useGetCurrentUserQuery } from '../services/authSlice.js'
 import { Link } from 'react-router-dom'
 import HamburgerMenu from './Hamburger'
 
+function handleSignOut() {
+	fetch(`${import.meta.env.VITE_BACKEND_URL}/api/logout`, {
+		method: 'POST',
+		credentials: 'include'
+	}).then(() => window.location.href = '/')
+}
+
 function Navbar() {
 	const { data, error, isLoading } = useGetCurrentUserQuery()
 	const [showDropdown, setShowDropdown] = useState(false)
@@ -21,6 +28,12 @@ function Navbar() {
 						<div className='signup-container'>
 							<div className='signup'>
 								<div className='signup__header'>My account</div>
+								<div
+									onClick={handleSignOut}
+									className='signup__signout'
+								>
+									Sign out
+								</div>
 							</div>
 						</div>
 					)}
