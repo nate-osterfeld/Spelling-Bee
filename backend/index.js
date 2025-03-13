@@ -45,11 +45,14 @@ app.get(
 app.get('/auth/google/callback', passport.authenticate('google', { session: false }), (req, res) => {
 	const { token, expiresIn } = utils.issueJWT(req.user.id)
 
-	res.status(200).json({
-		success: true,
-		token,
-		expiresIn,
+	res.cookie('jwt', token, {
+		httpOnly: true,
+		// secure: true,
+		sameSite: 'Lax',
+		expires: expiresIn * 1000,
 	})
+
+	res.redirect('http://localhost:5173/?sign-in-successful')
 })
 
 // app.get('/test_cookie', (req, res) => {
