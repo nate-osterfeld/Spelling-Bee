@@ -2,15 +2,20 @@ require('dotenv').config
 const express = require('express')
 const session = require('cookie-session')
 const passport = require('passport')
+const cors = require('cors')
+const cookieParser = require('cookie-parser')
 require('./services/passport.js')
-const q = require('./queries')
+const q = require('./queries.js')
 const keys = require('./config/keys.js')
 const pool = require('./db.js')
 const utils = require('./lib/utils.js')
 
 const app = express()
 
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(cookieParser())
 
 app.use(
 	session({
@@ -40,24 +45,31 @@ app.get(
 app.get('/auth/google/callback', passport.authenticate('google', { session: false }), (req, res) => {
 	const { token, expiresIn } = utils.issueJWT(req.user.id)
 
-	res.status(200).json({
-		success: true,
-		token,
-		expiresIn,
+	res.cookie('jwt', token, {
+		httpOnly: true,
+		// secure: true,
+		sameSite: 'Lax',
+		expires: expiresIn * 1000,
 	})
+
+	res.redirect('http://localhost:5173/?sign-in-successful')
 })
 
 // app.get('/test_cookie', (req, res) => {
 // 	res.send(req.user)
 // })
 
-app.get('/api/test-jwt', utils.authMiddleware, (req, res) => {
-	res.status(200).json({ success: true, message: 'You are successfully authenticated to visit this route' })
+app.get('/api/current-user', utils.authMiddleware, (req, res) => {
+	if (req.user) {
+		res.status(200).json({ signedIn: true, ...req.user })
+	} else {
+		res.status(200).json({ signedIn: false })
+	}
 })
 
-app.get('/api/logout', (req, res) => {
-	req.logout()
-	res.send(req.user)
+app.post('/api/logout', utils.authMiddleware, (req, res) => {
+	res.clearCookie('jwt', { httpOnly: true, sameSite: 'lax' })
+	res.status(200).json({ success: true, message: 'Logged out' })
 })
 
 app.post('/api/register', async (req, res) => {
@@ -69,12 +81,8 @@ app.post('/api/register', async (req, res) => {
 
 		const query_saveUser = 'INSERT INTO users (email, password, salt, acc_type) VALUES ($1, $2, $3, $4)'
 		const { rowCount } = await pool.query(query_saveUser, [req.body.email, hash, salt, 'email'])
-
 		if (rowCount === 1) {
-			const query_selectUser = 'SELECT * FROM users WHERE email = $1'
-			const user = await pool.query(query_selectUser, [req.body.email])
-
-			res.status(200).json({ success: true, user: user.rows[0] })
+			res.redirect('http://localhost:5173?registration=successful')
 		} else {
 			res.json({ success: false, message: 'Unable to save user' })
 		}
@@ -92,18 +100,21 @@ app.post('/api/login', async (req, res) => {
 		const isValid = utils.verifyPassword(req.body.password, password, salt)
 
 		if (isValid) {
-			const { token, expiresIn } = utils.issueJWT(id)
-			
-			res.status(200).json({
-				success: true,
-				token,
-				expiresIn
+			const { token, expiresIn } = utils.issueJWT(id) // serialize user with id
+
+			res.cookie("jwt", token, {
+				httpOnly: true,
+				// secure: true,
+				sameSite: 'Lax',
+				expires: expiresIn * 1000
 			})
+
+			res.redirect('http://localhost:5173/?sign-in-successful')
 		} else {
-			res.json({ success: false, message: 'Entered invalid password' })
+			res.redirect('http://localhost:5173/?failed-login') // invalid password
 		}
 	} else {
-		res.json({ success: false, message: 'User not found' })
+		res.redirect('http://localhost:5173/?failed-login') // unknown email
 	}
 })
 
