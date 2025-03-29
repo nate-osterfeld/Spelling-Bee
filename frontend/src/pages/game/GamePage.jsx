@@ -1,18 +1,31 @@
 import './GamePage.css'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import words from '@/words.js'
+import axios from 'axios'
 import { spellCorrect } from '@/utils/spellCorrect.js'
 import { Keyboard } from '@/components/Keyboard.jsx'
 
+
 function GamePage() {
 	const { level } = useParams()
-	const random = Math.floor(Math.random() * words[level].length)
-
+	
 	// 1. `spelling` for user typed input; 2. `word` for randomly selected word; 3. `tries` for attempts
 	const [spelling, setSpelling] = useState('')
-	const [word, setWord] = useState(words[level][random])
+	const [word, setWord] = useState('')
 	const [tries, setTries] = useState(0)
+	
+	// Get word by level
+	const fetchWord = async () => {
+		const word = await axios.get(
+			`http://localhost:8800/api/words/?level=${level}`,
+		)
+		setWord(word.data.word)
+	}
+
+	// Get word on initial page load
+	useEffect(() => {
+		fetchWord()
+	}, [])
 
 	// Play `word` once and for each time `setWord()` is called onSubmit if correct
 	useEffect(() => {
@@ -34,8 +47,8 @@ function GamePage() {
 
 		// If spelling correct, else wrong
 		if (spelling.toLowerCase() === word.toLowerCase()) {
-			setTimeout(() => {
-				setWord(words[level][random])
+			setTimeout(async () => {
+				fetchWord()
 				setSpelling('')
 			}, 1000)
 
