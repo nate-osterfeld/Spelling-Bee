@@ -13,6 +13,7 @@ function GamePage() {
 	const [spelling, setSpelling] = useState('')
 	const [word, setWord] = useState('')
 	const [tries, setTries] = useState(0)
+	const [hints, setHints] = useState(0)
 	
 	// Get word by level
 	const fetchWord = async () => {
@@ -41,7 +42,7 @@ function GamePage() {
 	}
 
 	// Called onSubmit: Checks if `spelling` === `word` and assigns new word if so
-	const checkSpelling = (e) => {
+	const checkSpelling = async (e) => {
 		document.querySelector('input').focus()
 		e.preventDefault()
 
@@ -57,7 +58,15 @@ function GamePage() {
 				document.querySelector('.game__input').classList.remove('correct')
 			}, 1100)
 
+			// Save word to user history
+			const isCorrect = (hints || tries) ? false : true
+			await axios.post('http://localhost:8800/api/words/save', {
+				isCorrect,
+				word,
+			}, { withCredentials: true })
+
 			setTries(0)
+			setHints(0)
 		} else {
 			document.querySelector('.game__input').classList.add('wrong')
 			setTimeout(() => {
@@ -123,6 +132,7 @@ function GamePage() {
 			setSpelling((prev) =>
 				spellCorrect(word, prev)
 			)
+			setHints(hints + 1)
 		} else {
 			pressElement()
 			
