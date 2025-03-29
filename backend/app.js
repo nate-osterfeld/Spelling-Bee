@@ -118,6 +118,8 @@ app.post('/api/login', async (req, res) => {
 	}
 })
 
+app.use('/api', require('./routes/index.js'))
+
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
 	console.log('Express server listening on port: ', PORT)
