@@ -23,6 +23,16 @@ router.post('/save', utils.authMiddleware, async (req, res) => {
     const { isCorrect, word } = req.body
     
     if (req.user) {
+        // Update word's global correctness rating
+        if (isCorrect) {
+            const query_updateWordSuccessRate = 'UPDATE words SET correct = correct + 1 WHERE word = $1'
+            await pool.query(query_updateWordSuccessRate, [word])
+        } else {
+            const query_updateWordSuccessRate = 'UPDATE words SET incorrect = incorrect + 1 WHERE word = $1'
+			await pool.query(query_updateWordSuccessRate, [word])
+        }
+
+        // Save word to user history
         const query_saveToHistory =
             'INSERT INTO wordshistory (created_at, is_correct, user_id, word_id) VALUES(' +
             'NOW(), $1, $2, (SELECT id FROM words WHERE word = $3))'
