@@ -48,4 +48,19 @@ router.post('/save', utils.authMiddleware, async (req, res) => {
     return res.json({ message: 'Please sign in to save words to your history' })
 })
 
+router.get('/progress', utils.authMiddleware, async (req, res) => {
+    if (req.user) {
+        const query_SelectProgress =
+            "SELECT word, level, correct, incorrect, created_at " +
+            "FROM wordshistory " +
+            "JOIN words ON wordshistory.word_id = words.id " +
+            "WHERE user_id = $1"
+        let { rows } = await pool.query(query_SelectProgress, [req.user.id])
+
+        return res.status(200).json({ success: true, data: rows })
+    }
+
+    return res.json({ success: false, message: 'User not logged in' })
+})
+
 module.exports = router
