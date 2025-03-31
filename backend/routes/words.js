@@ -51,7 +51,7 @@ router.post('/save', utils.authMiddleware, async (req, res) => {
 router.get('/progress', utils.authMiddleware, async (req, res) => {
     if (req.user) {
         const query_SelectProgress =
-            "SELECT word, level, correct, incorrect, created_at " +
+            "SELECT word, level, is_correct, correct, incorrect, created_at " +
             "FROM wordshistory " +
             "JOIN words ON wordshistory.word_id = words.id " +
             "WHERE user_id = $1"
