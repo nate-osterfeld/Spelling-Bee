@@ -10,8 +10,8 @@ import HamburgerMenu from './Hamburger'
 function handleSignOut() {
 	fetch(`${import.meta.env.VITE_BACKEND_URL}/api/logout`, {
 		method: 'POST',
-		credentials: 'include'
-	}).then(() => window.location.href = '/')
+		credentials: 'include',
+	}).then(() => (window.location.href = '/'))
 }
 
 function Navbar() {
@@ -19,6 +19,8 @@ function Navbar() {
 	const [showDropdown, setShowDropdown] = useState(false)
 	const [showSignup, setShowSignup] = useState(false)
 	const [showSignin, setShowSignin] = useState(false)
+
+	console.log('data', data)
 
 	function renderModal() {
 		if (data?.signedIn) {
@@ -28,10 +30,12 @@ function Navbar() {
 						<div className='signup-container'>
 							<div className='signup'>
 								<div className='signup__header'>My account</div>
-								<div
-									onClick={handleSignOut}
-									className='signup__signout'
-								>
+								<Link
+									onClick={() => setShowDropdown(false)}
+									to={`/progress`}>
+									Progress
+								</Link>
+								<div onClick={handleSignOut} className='signup__signout'>
 									Sign out
 								</div>
 							</div>
