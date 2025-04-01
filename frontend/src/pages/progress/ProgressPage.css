@@ -1,0 +1,10 @@
+/* Main Section */
+.progress__main-section {
+    display: flex;
+    justify-content: center;
+}
+
+.progress__main-wrapper {
+    width: 80%;
+    max-width: 900px;
+}
