@@ -22,6 +22,11 @@ function Navbar() {
 
 	console.log('data', data)
 
+	function forceCloseDropdown() {
+		document.getElementById('checkbox').checked = false
+		setShowDropdown(false)
+	}
+
 	function renderModal() {
 		if (data?.signedIn) {
 			return (
@@ -31,7 +36,7 @@ function Navbar() {
 							<div className='signup'>
 								<div className='signup__header'>My account</div>
 								<Link
-									onClick={() => setShowDropdown(false)}
+									onClick={() => forceCloseDropdown()}
 									to={`/progress`}>
 									Progress
 								</Link>
