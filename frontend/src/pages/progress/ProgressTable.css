@@ -1,0 +1,312 @@
+.progress-history {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.progress-history-title {
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 28px;
+    margin: 14px 0;
+}
+.progress-history-title.above {
+    display: none;
+}
+
+.progress-search {
+    border: .5px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    min-width: 0;
+}
+.progress-search input {
+    background-color: #f0f3ee;
+    border: none;
+    margin-left: 8px;
+    outline: none;
+    caret-color: rgb(115, 115, 115);
+}
+
+.progress-filter {
+    position: relative;
+    /* display: inline-block; */
+}
+
+.progress-filter-dropdown {
+    position: absolute;
+    background-color: white;
+    border: 1px solid rgb(220, 220, 220);
+    padding: 12px;
+    width: 300px;
+    right: 0px;
+    top: 34px;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+        rgba(0, 0, 0, 0.1) 0px 2px 4px -2px;
+    z-index: 100;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+.progress-filter-dropdown.active-dropdown {
+    opacity: 1;
+    visibility: visible;
+}
+
+.progress-filter-dropdown h3 {
+    color: #000000bf;
+}
+
+.dropdown-difficulties {
+    display: flex;
+    font-weight: bold;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.dropdown-difficulties input {
+    margin-right: 8px;
+}
+.dropdown-difficulties input:checked {
+    accent-color: #0b77bd;
+}
+.dropdown-easy {
+    color: rgb(32 187 124 / 73%);
+}
+.dropdown-medium {
+    color: #e7ba4e;
+}
+.dropdown-hard {
+    color: #db4651;
+}
+
+.progress-filter button.dropdown-button {
+    width: 100%;
+    justify-content: center;
+    background: rgb(245, 245, 245);
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border: none;
+    padding: 10px;
+}
+.progress-filter button.dropdown-button:hover {
+    background: rgb(245, 245, 245, 0.6);
+}
+
+.progress-filter button {
+    width: 78px;
+    display: flex;
+    justify-content: space-around;
+    padding: 6px 12px;
+    gap: 6px;
+    align-items: center;
+    border-radius: 20px;
+    background: #f0f3ee;
+    border: .5px solid rgba(0, 0, 0, 0.15);
+    color: rgba(0, 0, 0, 0.75);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+    font-size: 12px;
+}
+.progress-filter button:hover {
+    background: #e6e7e5;
+}
+
+.filter-icon {
+    height: 12px;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    background-color: white;
+    border-radius: 10px;
+    width: 100%;
+    min-width: 480px;
+    border: 1px solid rgb(240, 240, 240);
+    border-collapse: collapse;
+}
+
+thead {
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+th,
+td {
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    font-weight: 100;
+    color: #3c3c4399;
+    font-size: .9rem;
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 18px;
+    cursor: pointer;
+    position: relative;
+}
+
+th:nth-child(1) {
+    width: 150px;
+    padding-left: 12px;
+}
+
+/* First column */
+th:nth-child(2) {
+    width: 250px;
+}
+
+/* Second column */
+th:nth-child(3) {
+    width: 100px;
+}
+
+/* Third column */
+th:nth-child(4) {
+    width: 120px;
+}
+
+/* Fourth column */
+
+th:hover {
+    color: #000000bf;
+}
+
+td {
+    font-size: 14px;
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    color: rgba(60, 60, 67, 0.6);
+}
+
+td:nth-child(1) {
+    padding-left: 12px;
+}
+
+td:nth-child(2) {
+    color: #000000bf;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+td .progress-word-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+td img.word-correct {
+    height: 12px;
+}
+td img.word-incorrect {
+    height: 14px;
+}
+
+td .progress-word {
+    font-size: 16px;
+}
+
+td .progress-easy {
+    color: rgb(32 187 124 / 73%);
+    margin-top: 6px;
+    font-weight: 100;
+}
+td .progress-medium {
+    color: #e7ba4e;
+    margin-top: 6px;
+    font-weight: 100;
+}
+td .progress-hard {
+    color: #db4651;
+    margin-top: 6px;
+    font-weight: 100;
+}
+
+.sort-progress {
+    display: inline-block;
+    margin-left: 6px;
+}
+
+img.arrow-sort-up {
+    height: 12px;
+    display: block;
+    transform: translate(0px, 14px);
+}
+
+img.arrow-sort-down {
+    transform: translate(.15px, 1px);
+}
+
+.hide {
+    opacity: 0;
+}
+
+.select {
+    filter: brightness(0) saturate(100%) invert(24%) sepia(99%) saturate(4236%) hue-rotate(197deg) brightness(99%) contrast(101%);
+}
+
+.progress-pagination {
+    text-align: right;
+    margin-top: 18px;
+}
+
+.progress-pagination span {
+    margin: 0 12px;
+    color: rgba(0, 0, 0, 0.75);
+}
+.progress-pagination button {
+    border: .5px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;;
+    cursor: pointer;
+}
+.progress-pagination button:hover {
+    background-color: #e6e7e5;
+}
+.progress-pagination button:disabled {
+    background-color: rgba(0, 0, 0, 0.04);
+    opacity: 0.6;
+    cursor: unset;
+}
+
+.angle-left,
+.angle-right {
+    height: 12px;
+    margin-top: 2.5px;
+}
+
+@media (max-width: 415px) {
+    .progress-history {
+        margin-bottom: 16px;
+    }
+    .progress-history-title.above {
+        display: block;
+    }
+    .progress-history-title.below {
+        display: none;
+    }
+    th,
+    td {
+        padding-right: 6px;
+    }
+
+    td:nth-child(1),
+    th:nth-child(1) {
+        padding-left: 6px;
+    }
+}

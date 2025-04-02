@@ -10,22 +10,20 @@ function ProgressPage() {
 
 	useEffect(() => {
 		if (data && !isLoading) {
-			const formattedData = data.data.map((obj) => {
-				const formattedDate = new Date(obj.created_at).toLocaleString('en-US', {
-					month: 'long',
-					day: 'numeric',
-					year: 'numeric',
-				})
+            const formattedData = data.data.map((obj) => {
 
 				let correct = parseInt(obj.correct)
 				let incorrect = parseInt(obj.incorrect)
 				const formattedAcceptance =
-					Math.round((correct / (correct + incorrect)) * 10000) / 100
+                    Math.round((correct / (correct + incorrect)) * 10000) / 100
+                
+                const formattedCorrectness = obj.is_correct ? 'Accepted' : 'Wrong Answer'
 
 				return {
 					...obj,
-					created_at: formattedDate,
+					// created_at: formattedDate,
 					acceptance: formattedAcceptance,
+                    is_correct: formattedCorrectness
 				}
 			})
 
