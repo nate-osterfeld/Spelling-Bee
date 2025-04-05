@@ -129,7 +129,7 @@ const ProgressTable = ({ data }) => {
 	}
 
 	return (
-		<>
+		<div className='progress-table'>
 			<h3 className='progress-history-title above'>History</h3>
 			<div className='progress-history'>
 				<h3 className='progress-history-title below'>History</h3>
@@ -266,7 +266,7 @@ const ProgressTable = ({ data }) => {
 					<img src={rightCaret} className='angle-right' alt='next page' />
 				</button>
 			</div>
-		</>
+		</div>
 	)
 }
 

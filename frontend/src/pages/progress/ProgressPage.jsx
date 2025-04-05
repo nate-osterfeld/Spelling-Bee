@@ -1,7 +1,9 @@
 import './ProgressPage.css'
 import React, { useEffect, useState } from 'react'
 import { useGetUserProgressQuery } from '../../services/authSlice.js'
+import ProgressSummary from './ProgressSummary.jsx'
 import ProgressTable from './ProgressTable.jsx'
+import Loading from '../../components/Loading.jsx'
 
 function ProgressPage() {
 	const { data, error, isLoading } = useGetUserProgressQuery()
@@ -34,9 +36,12 @@ function ProgressPage() {
 	return (
 		<>
 			<main className='progress__main-section'>
-				<div className='progress__main-wrapper'>
-					{progressData.length && (
-						<ProgressTable data={progressData} isLoading={isLoading} error={error} />
+                <div className='progress__main-wrapper'>
+                    {!progressData.length ? <Loading /> : (
+                        <>
+                            <ProgressSummary data={progressData} />
+						    <ProgressTable data={progressData} isLoading={isLoading} error={error} />
+                        </>
 					)}
 				</div>
 			</main>

@@ -1,0 +1,128 @@
+.progress-summary-title {
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 28px;
+    margin: 14px 0;
+}
+
+.total-solved {
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid rgb(240, 240, 240);
+    padding: 1rem;
+}
+
+.total-solved__row-1 {
+    color: #737373;
+    font-weight: bold;
+    font-size: .875rem;
+}
+
+.total-solved__row-2 {
+    display: flex;
+    justify-content: space-between;
+    margin: .5rem 0;
+}
+.total-solved__row-2 > div:first-child {
+    color: #0b77bd;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 2rem;
+}
+.total-solved__row-2 > div:first-child > span {
+    font-size: 1rem;
+    font-weight: 100;
+}
+.total-solved__row-2 > div:nth-child(2) {
+    color: #737373;
+    font-size: .875rem;
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+}
+.hands-clapping {
+    height: 14px;
+}
+
+/* Total solved - Row 3 */
+.total-solved__row-3 {
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+}
+.total-solved__row-3 div {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.04);
+    padding: .375rem .75rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+}
+
+.row-3__easy > span:nth-child(1) {
+    color: rgb(32 187 124 / 73%);
+}
+.row-3__easy > span:nth-child(2) {
+    color: #000000bf;
+}
+
+.row-3__medium > span:nth-child(1) {
+    color: #e7ba4e;
+}
+.row-3__medium > span:nth-child(2) {
+    color: #000000bf;
+}
+
+.row-3__hard > span:nth-child(1) {
+    color: #db4651;
+}
+.row-3__hard > span:nth-child(2) {
+    color: #000000bf;
+}
+
+/* Submissions + Acceptance */
+.submissions-acceptance {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.submissions,
+.acceptance {
+    width: 100%;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid rgb(240, 240, 240);
+}
+
+.submissions-title {
+    color: #000000bf;
+    font-size: .875rem;
+    line-height: 1.25rem;
+}
+.submissions-count {
+    color: rgb(171, 80, 220);
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+.acceptance-title {
+    color: #000000bf;
+    font-size: .875rem;
+    line-height: 1.25rem;
+}
+.acceptance-count {
+    color: rgb(2, 177, 40);
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+.acceptance-count > span {
+    font-size: 14px;
+}
+
+
+
+
+
