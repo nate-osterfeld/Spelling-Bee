@@ -39,6 +39,7 @@ app.get(
 	'/auth/google',
 	passport.authenticate('google', {
 		scope: ['profile', 'email'],
+		session: false
 	}),
 )
 
@@ -47,7 +48,7 @@ app.get('/auth/google/callback', passport.authenticate('google', { session: fals
 
 	res.cookie('jwt', token, {
 		httpOnly: true,
-		// secure: true,
+		secure: process.env.NODE_ENV === 'production',
 		sameSite: 'Lax',
 		expires: expiresIn * 1000,
 	})

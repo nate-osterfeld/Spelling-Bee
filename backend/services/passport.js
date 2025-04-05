@@ -10,6 +10,7 @@ passport.use(
 			clientID: keys.GOOGLE_CLIENT_ID, // Google OAuth client ID
 			clientSecret: keys.GOOGLE_CLIENT_SECRET, // Google OAuth client secret
 			callbackURL: '/auth/google/callback', // Callback route after authentication
+			scope: ['profile', 'email']
 		},
 		// On initial login
 		async (accessToken, refreshToken, profile, done) => {
