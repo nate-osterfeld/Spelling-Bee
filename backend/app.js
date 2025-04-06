@@ -12,7 +12,7 @@ const utils = require('./lib/utils.js')
 
 const app = express()
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser())
@@ -53,7 +53,7 @@ app.get('/auth/google/callback', passport.authenticate('google', { session: fals
 		expires: expiresIn * 1000,
 	})
 
-	res.redirect('http://localhost:5173/?sign-in-successful')
+	res.redirect(`${process.env.FRONTEND_URL}/?sign-in-successful`)
 })
 
 // app.get('/test_cookie', (req, res) => {
@@ -83,7 +83,7 @@ app.post('/api/register', async (req, res) => {
 		const query_saveUser = 'INSERT INTO users (email, password, salt, acc_type) VALUES ($1, $2, $3, $4)'
 		const { rowCount } = await pool.query(query_saveUser, [req.body.email, hash, salt, 'email'])
 		if (rowCount === 1) {
-			res.redirect('http://localhost:5173?registration=successful')
+			res.redirect(`${process.env.FRONTEND_URL}?registration=successful`)
 		} else {
 			res.json({ success: false, message: 'Unable to save user' })
 		}
@@ -110,12 +110,12 @@ app.post('/api/login', async (req, res) => {
 				expires: expiresIn * 1000
 			})
 
-			res.redirect('http://localhost:5173/?sign-in-successful')
+			res.redirect(`${process.env.FRONTEND_URL}/?sign-in-successful`)
 		} else {
-			res.redirect('http://localhost:5173/?failed-login') // invalid password
+			res.redirect(`${process.env.FRONTEND_URL}/?failed-login`) // invalid password
 		}
 	} else {
-		res.redirect('http://localhost:5173/?failed-login') // unknown email
+		res.redirect(`${process.env.FRONTEND_URL}/?failed-login`) // unknown email
 	}
 })
 

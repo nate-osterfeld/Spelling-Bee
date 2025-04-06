@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom'
 import HamburgerMenu from './Hamburger'
 
 function handleSignOut() {
-	fetch(`${import.meta.env.VITE_BACKEND_URL}/api/logout`, {
+	fetch(`${import.meta.env.BACKEND_URL}/api/logout`, {
 		method: 'POST',
 		credentials: 'include',
 	}).then(() => (window.location.href = '/'))
@@ -56,7 +56,7 @@ function Navbar() {
 							<div className='signup'>
 								<div className='signup__header'>Join SpeeBee!</div>
 								<a
-									href={`${import.meta.env.VITE_BACKEND_URL}/auth/google`}
+									href={`${import.meta.env.BACKEND_URL}/auth/google`}
 									className='signup__method'
 								>
 									<img src={google_icon} alt='Google Logo' />
@@ -104,7 +104,10 @@ function Navbar() {
 									Enter your email address and password to create an account.
 								</p>
 
-								<form action='http://localhost:8800/api/register' method='POST'>
+								<form
+									action={`${import.meta.env.BACKEND_URL}/api/register`}
+									method='POST'
+								>
 									<label>Email</label>
 									<input
 										name='email'
@@ -163,7 +166,10 @@ function Navbar() {
 								</button>
 								<div className='signup__header2'>Sign into SpeeBee</div>
 
-								<form action='http://localhost:8800/api/login' method='POST'>
+								<form
+									action={`${import.meta.env.BACKEND_URL}/api/login`}
+									method='POST'
+								>
 									<label>Email</label>
 									<input
 										name='email'
