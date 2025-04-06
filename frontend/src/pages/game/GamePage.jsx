@@ -17,7 +17,7 @@ function GamePage() {
 	
 	// Get word by level
 	const fetchWord = async () => {
-		const word = await axios.get(`${import.meta.env.BACKEND_URL}/api/words/?level=${level}`)
+		const word = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/words/?level=${level}`)
 		setWord(word.data.word)
 	}
 
@@ -59,7 +59,7 @@ function GamePage() {
 			// Save word to user history
 			const isCorrect = (hints || tries) ? false : true
 			
-			await axios.post(`${import.meta.env.BACKEND_URL}/api/words/save`, {
+			await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/words/save`, {
 				isCorrect,
 				word,
 			}, { withCredentials: true })
