@@ -95,6 +95,8 @@ app.post('/api/register', async (req, res) => {
 app.post('/api/login', async (req, res) => {
 	const query_selectUserByEmail = 'SELECT * FROM users WHERE email = $1'
 	const user = await pool.query(query_selectUserByEmail, [req.body.email])
+
+	console.log('api/login', user)
 	
 	if (user.rowCount === 1) {
 		const { id, password, salt } = user.rows[0]
@@ -105,7 +107,7 @@ app.post('/api/login', async (req, res) => {
 
 			res.cookie("jwt", token, {
 				httpOnly: true,
-				// secure: true,
+				secure: process.env.NODE_ENV === 'production',
 				sameSite: 'Lax',
 				expires: expiresIn * 1000
 			})

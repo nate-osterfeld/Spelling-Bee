@@ -39,25 +39,33 @@ function issueJWT(id) {
 
 	return {
 		token: 'Bearer ' + signedToken,
+		token: signedToken,
 		expiresIn,
 	}
 }
 
 // Attach user to request object
 async function authMiddleware(req, res, next) {
-    if (req.cookies.jwt) {
-		const tokenParts = req.cookies.jwt.split(' ')
+	console.log('jwt cookie 1', req.cookies.jwt)
+	if (req.cookies.jwt) {
+		console.log('jwt cookie 2', req.cookies.jwt)
+		
+		// const tokenParts = req.cookies.jwt.split(' ')
+		const token = decodeURIComponent(req.cookies.jwt)
 
-		if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
+		// if (tokenParts[0] === 'Bearer' && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
+		if (token.match(/\S+\.\S+\.\S+/) !== null) {
 			try {
-				const verification = jsonwebtoken.verify(tokenParts[1], PUB_KEY, {
+				// const verification = jsonwebtoken.verify(tokenParts[1], PUB_KEY, {
+				const verification = jsonwebtoken.verify(token, PUB_KEY, {
 					algorithms: ['RS256'],
 				})
 
-                const query_selectUserById = 'SELECT id, email, google_id, name FROM users WHERE id = $1'
-                const user = await pool.query(query_selectUserById, [verification.sub])
+				const query_selectUserById =
+					'SELECT id, email, google_id, name FROM users WHERE id = $1'
+				const user = await pool.query(query_selectUserById, [verification.sub])
 
-                req.user = user.rows[0]
+				req.user = user.rows[0]
 			} catch (err) {
 				res.status(401).json({
 					success: false,
