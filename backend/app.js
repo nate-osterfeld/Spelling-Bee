@@ -71,6 +71,7 @@ app.get('/api/current-user', utils.authMiddleware, (req, res) => {
 app.post('/api/logout', utils.authMiddleware, (req, res) => {
 	res.clearCookie('jwt', {
 		httpOnly: true,
+		secure: process.env.NODE_ENV === 'production',
 		sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
 	})
 	res.status(200).json({ success: true, message: 'Logged out' })
