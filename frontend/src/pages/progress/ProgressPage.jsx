@@ -8,6 +8,7 @@ import Loading from '../../components/Loading.jsx'
 function ProgressPage() {
 	const { data, error, isLoading } = useGetUserProgressQuery()
 	const [progressData, setProgressData] = useState([])
+	const [percentile, setPercentile] = useState(0)
 	console.log('progress data', data)
 
 	useEffect(() => {
@@ -23,13 +24,13 @@ function ProgressPage() {
 
 				return {
 					...obj,
-					// created_at: formattedDate,
 					acceptance: formattedAcceptance,
                     is_correct: formattedCorrectness
 				}
 			})
 
 			setProgressData(formattedData)
+			setPercentile(data.percentile)
 		}
 	}, [data])
 
@@ -39,7 +40,7 @@ function ProgressPage() {
                 <div className='progress__main-wrapper'>
                     {!progressData.length ? <Loading /> : (
                         <>
-                            <ProgressSummary data={progressData} />
+                            <ProgressSummary data={progressData} percentile={percentile} />
 						    <ProgressTable data={progressData} isLoading={isLoading} error={error} />
                         </>
 					)}

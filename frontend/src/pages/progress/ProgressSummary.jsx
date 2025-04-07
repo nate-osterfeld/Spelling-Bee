@@ -1,7 +1,7 @@
 import './ProgressSummary.css'
 import handsClapping from '../../assets/hands-clapping-icon.svg'
 
-function ProgressSummary({ data }) {
+function ProgressSummary({ data, percentile }) {
     const total = Array.from(
 		new Map(
 			data
@@ -26,7 +26,7 @@ function ProgressSummary({ data }) {
 					</div>
 					<div>
 						<img src={handsClapping} className='hands-clapping' alt='hands clapping' />
-						Beats 75.8%
+						Beats {percentile}%
 					</div>
 				</div>
 				<div className='total-solved__row-3'>
