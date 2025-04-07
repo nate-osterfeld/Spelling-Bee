@@ -9,6 +9,7 @@ const q = require('./queries.js')
 const keys = require('./config/keys.js')
 const pool = require('./db.js')
 const utils = require('./lib/utils.js')
+require('./sql/index.js')
 
 const app = express()
 
