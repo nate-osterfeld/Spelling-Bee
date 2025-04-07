@@ -1,13 +1,13 @@
 const fs = require('fs')
 const path = require('path')
 
-const queries = {}
+const SQL = {}
 
-function loadQueries(dir) {
+function loadSqlFiles(dir) {
 	fs.readdirSync(dir).forEach((item) => {
 		const fullPath = path.join(dir, item)
 		if (fs.statSync(fullPath).isDirectory()) {
-			loadQueries(fullPath)
+			loadSqlFiles(fullPath)
 		} else if (item.endsWith('.sql')) {
 			// Convert path to query name (e.g., analytics/get_weighted_accuracy)
 			const queryName = path
@@ -16,17 +16,17 @@ function loadQueries(dir) {
 				.replace('.sql', '')
 				.replace(/\\/g, '/') // Normalize Windows paths
 
-			queries[queryName] = fs.readFileSync(fullPath, 'utf8')
+			SQL[queryName] = fs.readFileSync(fullPath, 'utf8')
 		}
 	})
 }
 
 try {
-	loadQueries(path.join(__dirname, '../sql'))
-	console.log(`Loaded ${Object.keys(queries).length} SQL queries`)
+	loadSqlFiles(path.join(__dirname, '../sql'))
+	console.log(`Loaded ${Object.keys(SQL).length} SQL files`)
 } catch (err) {
-	console.error('FATAL: Failed to load SQL queries:', err)
+	console.error('FATAL: Failed to load SQL files:', err)
 	process.exit(1)
 }
 
-module.exports = queries
+module.exports = SQL
