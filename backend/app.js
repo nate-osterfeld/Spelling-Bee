@@ -29,7 +29,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.get('/', (req, res) => {
-	console.log('GET /')
 	return res.json('This route works')
 })
 
@@ -55,10 +54,6 @@ app.get('/auth/google/callback', passport.authenticate('google', { session: fals
 
 	res.redirect(`${process.env.FRONTEND_URL}/?sign-in-successful`)
 })
-
-// app.get('/test_cookie', (req, res) => {
-// 	res.send(req.user)
-// })
 
 app.get('/api/current-user', utils.authMiddleware, (req, res) => {
 	if (req.user) {
@@ -99,8 +94,6 @@ app.post('/api/register', async (req, res) => {
 app.post('/api/login', async (req, res) => {
 	const query_selectUserByEmail = 'SELECT * FROM users WHERE email = $1'
 	const user = await pool.query(query_selectUserByEmail, [req.body.email])
-
-	console.log('api/login', user)
 	
 	if (user.rowCount === 1) {
 		const { id, password, salt } = user.rows[0]

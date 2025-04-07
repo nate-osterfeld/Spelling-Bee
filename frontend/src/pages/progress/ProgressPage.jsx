@@ -8,7 +8,7 @@ import Loading from '../../components/Loading.jsx'
 function ProgressPage() {
 	const { data, error, isLoading } = useGetUserProgressQuery()
 	const [progressData, setProgressData] = useState([])
-	console.log('data', data)
+	console.log('progress data', data)
 
 	useEffect(() => {
 		if (data && !isLoading) {

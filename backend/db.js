@@ -24,10 +24,10 @@ pool.connect()
 // Test query
 pool.query('SELECT NOW()', (err, res) => {
 	if (err) {
-		console.log('Environment: ', process.env.NODE_ENV)
+		console.log('Environment: ', process.env.NODE_ENV || 'development')
 		console.log('Error running test query:', err)
 	} else {
-		console.log('Environment: ', process.env.NODE_ENV)
+		console.log('Environment: ', process.env.NODE_ENV || 'development')
 		console.log('Test query result:', res.rows)
 	}
 })

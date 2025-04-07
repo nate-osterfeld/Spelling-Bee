@@ -103,8 +103,6 @@ function GamePage() {
 			}, 200)
 		}
 
-		console.log(className)
-
 		// delete, enter, hint, or character key press
 		if (className === 'del' || className === 'backspace-svg') {
 			className === 'del' 

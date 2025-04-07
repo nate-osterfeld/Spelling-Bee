@@ -1,7 +1,6 @@
 const pool = require('./db')
 
 const getUsers = async (req, res) => {
-    console.log('GET /users')
     const q = 'SELECT * FROM users'
 
     try {

@@ -46,10 +46,7 @@ function issueJWT(id) {
 
 // Attach user to request object
 async function authMiddleware(req, res, next) {
-	console.log('jwt cookie 1', req.cookies.jwt)
 	if (req.cookies.jwt) {
-		console.log('jwt cookie 2', req.cookies.jwt)
-		
 		// const tokenParts = req.cookies.jwt.split(' ')
 		const token = decodeURIComponent(req.cookies.jwt)
 

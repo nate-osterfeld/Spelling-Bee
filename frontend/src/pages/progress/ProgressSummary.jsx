@@ -2,9 +2,6 @@ import './ProgressSummary.css'
 import handsClapping from '../../assets/hands-clapping-icon.svg'
 
 function ProgressSummary({ data }) {
-    console.log('aaaa', data)
-    
-    // const total = Array.from(new Map(data.map((obj) => [obj.word, obj])).values())
     const total = Array.from(
 		new Map(
 			data
@@ -16,7 +13,6 @@ function ProgressSummary({ data }) {
     const easy = total.filter(({ level }) => level === 'easy')
     const medium = total.filter(({ level }) => level === 'medium')
     const hard = total.filter(({ level }) => level === 'hard')
-    console.log('total', total)
 
 	return (
 		<div className='progress-summary'>
