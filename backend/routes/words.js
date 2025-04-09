@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const pool = require('../db.js')
 const utils = require('../lib/utils.js')
-const SQL = require('../sql/index.js')
+const { queries } = require('../sql/index.js')
 
 router.get('/', async (req, res) => {
 	const { level } = req.query
@@ -62,7 +62,7 @@ router.get('/progress', utils.authMiddleware, async (req, res) => {
 			'WHERE user_id = $1'
 		let { rows: history } = await pool.query(query_SelectProgress, [req.user.id])
 
-		let { rows: accuracy } = await pool.query(SQL['queries/analytics/get_weighted_accuracy'])
+		let { rows: accuracy } = await pool.query(queries['analytics/get_weighted_accuracy'])
 
 		// Get percentile (update to grab user score from db instead of mapping first here)
 		const userScore = accuracy.filter((score) => score.user_id === req.user.id)[0] // Find weighted accuracy for user

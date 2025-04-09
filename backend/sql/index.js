@@ -1,32 +1,49 @@
 const fs = require('fs')
 const path = require('path')
 
-const SQL = {}
+const migrations = {}
+const seeds = {}
+const queries = {}
 
-function loadSqlFiles(dir) {
+function loadSQL(dir, targetObj, prefix = '') {
+	// Verify target object exists
+	if (!targetObj) {
+		throw new Error(`Target object is undefined for directory: ${dir}`)
+	}
+
+	// Verify directory exists
+	if (!fs.existsSync(dir)) {
+		console.warn(`Directory not found: ${dir}`)
+		return
+	}
+
 	fs.readdirSync(dir).forEach((item) => {
 		const fullPath = path.join(dir, item)
-		if (fs.statSync(fullPath).isDirectory()) {
-			loadSqlFiles(fullPath)
-		} else if (item.endsWith('.sql')) {
-			// Convert path to query name (e.g., analytics/get_weighted_accuracy)
-			const queryName = path
-				.relative(__dirname, fullPath)
-				.replace('../sql/', '')
-				.replace('.sql', '')
-				.replace(/\\/g, '/') // Normalize Windows paths
+		const stat = fs.statSync(fullPath)
 
-			SQL[queryName] = fs.readFileSync(fullPath, 'utf8')
+		if (stat.isDirectory()) {
+			loadSQL(fullPath, targetObj, `${prefix}${item}/`)
+		} else if (item.endsWith('.sql')) {
+			const key = `${prefix}${item.replace('.sql', '')}`
+			targetObj[key] = fs.readFileSync(fullPath, 'utf8')
 		}
 	})
 }
 
 try {
-	loadSqlFiles(path.join(__dirname, '../sql'))
-	console.log(`Loaded ${Object.keys(SQL).length} SQL files`)
+	loadSQL(path.join(__dirname, 'migrations'), migrations)
+	loadSQL(path.join(__dirname, 'seeds'), seeds)
+	loadSQL(path.join(__dirname, 'queries'), queries)
+
+	console.log('Successfully loaded:', {
+		migrations: Object.keys(migrations).length,
+		seeds: Object.keys(seeds).length,
+		queries: Object.keys(queries).length,
+	})
 } catch (err) {
 	console.error('FATAL: Failed to load SQL files:', err)
 	process.exit(1)
 }
 
-module.exports = SQL
+module.exports = { migrations, seeds, queries }
+
