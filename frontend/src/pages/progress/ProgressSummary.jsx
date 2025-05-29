@@ -26,7 +26,7 @@ function ProgressSummary({ data, percentile }) {
 					</div>
 					<div>
 						<img src={handsClapping} className='hands-clapping' alt='hands clapping' />
-						Beats {percentile}%
+						Beats {percentile.toFixed(2)}%
 					</div>
 				</div>
 				<div className='total-solved__row-3'>
@@ -53,7 +53,7 @@ function ProgressSummary({ data, percentile }) {
 				<div className='acceptance'>
 					<div className='acceptance-title'>Acceptance</div>
 					<div className='acceptance-count'>
-						{(total.length / data.length).toFixed(3) * 100}
+						{((total.length / data.length) * 100).toFixed(2)}
 						<span>%</span>
 					</div>
 				</div>
