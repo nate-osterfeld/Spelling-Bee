@@ -2,17 +2,11 @@ import './ProgressSummary.css'
 import handsClapping from '../../assets/hands-clapping-icon.svg'
 
 function ProgressSummary({ data, percentile }) {
-    const total = Array.from(
-		new Map(
-			data
-				.filter((obj) => obj.is_correct === 'Accepted') // Only include "Accepted" objects
-				.map((obj) => [obj.word, obj]), // Map words to their objects
-		).values(),
-	)
+	const totalCorrect = data.filter((obj) => obj.is_correct === 'Accepted')
 
-    const easy = total.filter(({ level }) => level === 'easy')
-    const medium = total.filter(({ level }) => level === 'medium')
-    const hard = total.filter(({ level }) => level === 'hard')
+    const easy = totalCorrect.filter(({ level }) => level === 'easy')
+    const medium = totalCorrect.filter(({ level }) => level === 'medium')
+    const hard = totalCorrect.filter(({ level }) => level === 'hard')
 
 	return (
 		<div className='progress-summary'>
@@ -22,7 +16,7 @@ function ProgressSummary({ data, percentile }) {
 				<div className='total-solved__row-1'>Total solved</div>
 				<div className='total-solved__row-2'>
 					<div>
-						{total.length} <span>Words</span>
+						{totalCorrect.length} <span>Words</span>
 					</div>
 					<div>
 						<img src={handsClapping} className='hands-clapping' alt='hands clapping' />
@@ -53,7 +47,7 @@ function ProgressSummary({ data, percentile }) {
 				<div className='acceptance'>
 					<div className='acceptance-title'>Acceptance</div>
 					<div className='acceptance-count'>
-						{((total.length / data.length) * 100).toFixed(2)}
+						{((totalCorrect.length / data.length) * 100).toFixed(2)}
 						<span>%</span>
 					</div>
 				</div>
