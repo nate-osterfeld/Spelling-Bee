@@ -67,7 +67,11 @@ nav {
     text-align: center;
     letter-spacing: 0px;
     margin: 0;
-    height: 15%;
+    height: 10%;
+}
+.signup__email {
+    height: 10%;
+    opacity: 70%;
 }
 .signup__method {
     all: unset;

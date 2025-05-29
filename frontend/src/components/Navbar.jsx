@@ -35,6 +35,7 @@ function Navbar() {
 						<div className='signup-container'>
 							<div className='signup'>
 								<div className='signup__header'>My account</div>
+								<div className="signup__email">{data.email}</div>
 								<Link
 									onClick={() => forceCloseDropdown()}
 									to={`/progress`}>
