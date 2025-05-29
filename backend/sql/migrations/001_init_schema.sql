@@ -47,7 +47,7 @@ CREATE TABLE public.wordshistory (
     user_id INTEGER REFERENCES public.users(id),
     word_id INTEGER REFERENCES public.words(id),
     is_correct BOOLEAN,
-    CONSTRAINT wordshistory_user_id_word_id_key UNIQUE (user_id, word_id)
+    -- CONSTRAINT wordshistory_user_id_word_id_key UNIQUE (user_id, word_id)
 );
 
 -- Create the trigger function to set the default name before insert

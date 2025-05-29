@@ -1,0 +1,1 @@
+ALTER TABLE public.wordshistory DROP CONSTRAINT wordshistory_user_id_word_id_key;
