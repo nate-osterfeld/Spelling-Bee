@@ -66,6 +66,7 @@ function GamePage() {
 
 			setTries(0)
 			setHints(0)
+			setWord('')
 		} else {
 			document.querySelector('.game__input').classList.add('wrong')
 			setTimeout(() => {
