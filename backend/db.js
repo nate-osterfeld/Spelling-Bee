@@ -8,19 +8,14 @@ const pool = new Pool({
 	},
 })
 
-pool.connect()
-	.then(() => console.log('Connected to Postgres database'))
-	.catch((err) => console.log('Error connecting to Postgres database', err))
+pool.on('error', (err, client) => {
+	console.error('Unexpected error on idle Postgres client', err);
+	// maybe log to a service or alert here
+});
 
 // Test query
-pool.query('SELECT NOW()', (err, res) => {
-	if (err) {
-		console.log('Environment: ', process.env.NODE_ENV || 'development')
-		console.log('Error running test query:', err)
-	} else {
-		console.log('Environment: ', process.env.NODE_ENV || 'development')
-		console.log('Test query result:', res.rows)
-	}
-})
+pool.query('SELECT NOW()')
+	.then(res => console.log('Connected to Postgres at', res.rows[0].now))
+	.catch(err => console.error('Error connecting to Postgres database', err));
 
 module.exports = pool
