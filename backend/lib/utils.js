@@ -63,15 +63,18 @@ async function authMiddleware(req, res, next) {
 				const user = await pool.query(query_selectUserById, [verification.sub])
 
 				req.user = user.rows[0]
+				return next() // user found
 			} catch (err) {
-				res.status(401).json({
+				// invalid jwt
+				return res.status(401).json({
 					success: false,
 					message: 'You are not authorized to visit this route',
 				})
 			}
 		}
     }
-    next()
+
+    return next() // no user found
 }
 
 module.exports.genPassword = genPassword
