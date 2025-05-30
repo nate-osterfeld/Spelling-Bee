@@ -13,36 +13,38 @@ function ProgressPage() {
 
 	useEffect(() => {
 		if (data && !isLoading) {
-            const formattedData = data.data.map((obj) => {
+			const formattedData = data.data.map((obj) => {
 
 				let correct = parseInt(obj.correct)
 				let incorrect = parseInt(obj.incorrect)
 				const formattedAcceptance =
-                    Math.round((correct / (correct + incorrect)) * 10000) / 100
-                
-                const formattedCorrectness = obj.is_correct ? 'Accepted' : 'Wrong Answer'
+					Math.round((correct / (correct + incorrect)) * 10000) / 100
+
+				const formattedCorrectness = obj.is_correct ? 'Accepted' : 'Wrong Answer'
 
 				return {
 					...obj,
 					acceptance: formattedAcceptance,
-                    is_correct: formattedCorrectness
+					is_correct: formattedCorrectness
 				}
 			})
 
 			setProgressData(formattedData)
-			setPercentile(data.percentile)
+			setPercentile(data.percentile ?? 0)
 		}
-	}, [data])
+	}, [isLoading])
 
 	return (
 		<>
 			<main className='progress__main-section'>
-                <div className='progress__main-wrapper'>
-                    {!progressData.length ? <Loading /> : (
-                        <>
-                            <ProgressSummary data={progressData} percentile={percentile} />
-						    <ProgressTable data={progressData} isLoading={isLoading} error={error} />
-                        </>
+				<div className='progress__main-wrapper'>
+					{isLoading ? (
+						<Loading />
+					) : (
+						<>
+							<ProgressSummary data={progressData} percentile={percentile} />
+							<ProgressTable data={progressData} isLoading={isLoading} error={error} />
+						</>
 					)}
 				</div>
 			</main>

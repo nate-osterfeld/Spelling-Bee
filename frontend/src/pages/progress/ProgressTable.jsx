@@ -32,7 +32,7 @@ const ProgressTable = ({ data }) => {
 		} else {
 			setFilteredData(data)
 		}
-	}, [selectedDifficulties])
+	}, [selectedDifficulties, data])
 
 	// Close dropdown on document click !== dropdown
 	useEffect(() => {

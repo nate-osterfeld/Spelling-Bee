@@ -47,7 +47,7 @@ function ProgressSummary({ data, percentile }) {
 				<div className='acceptance'>
 					<div className='acceptance-title'>Acceptance</div>
 					<div className='acceptance-count'>
-						{((totalCorrect.length / data.length) * 100).toFixed(2)}
+						{((totalCorrect.length / data.length || 0) * 100).toFixed(2)}
 						<span>%</span>
 					</div>
 				</div>

@@ -60,18 +60,26 @@ router.get('/progress', utils.authMiddleware, async (req, res) => {
 			'FROM wordshistory ' +
 			'JOIN words ON wordshistory.word_id = words.id ' +
 			'WHERE user_id = $1'
+			
 		let { rows: history } = await pool.query(query_SelectProgress, [req.user.id])
-
 		let { rows: accuracy } = await pool.query(queries['analytics/get_weighted_accuracy'])
 
-		// Get percentile (update to grab user score from db instead of mapping first here)
-		const userScore = accuracy.filter((score) => score.user_id === req.user.id)[0] // Find weighted accuracy for user
-		const userBeats = accuracy.filter(
-			(score) => userScore.weighted_accuracy > score.weighted_accuracy,
-		).length // Find number of users they beat
-		const percentile = ((userBeats + 1) / accuracy.length) * 100 // Divide by total number of users
+		const userScore = accuracy.find((score) => score.user_id === req.user.id) // Find weighted accuracy for user
 
-		return res.status(200).json({ success: true, data: history, percentile: percentile })
+		let percentile = null
+		if (userScore) {
+			const userBeats = accuracy.filter(
+				(score) => userScore.weighted_accuracy > score.weighted_accuracy,
+			).length
+
+			percentile = ((userBeats + 1) / accuracy.length) * 100
+		}
+
+		return res.status(200).json({
+			success: true,
+			data: history,
+			percentile: percentile
+		})
 	}
 
 	return res.json({ success: false, message: 'User not logged in' })
