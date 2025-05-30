@@ -18,7 +18,14 @@ export const authApi = createApi({
 				credentials: 'include',
 			}),
 		}),
+		getLeaderboard: builder.query({
+			query: ({ page = 1, pageSize = 25 }) => ({
+				url: `/api/stats/leaderboard?page=${page}&pageSize=${pageSize}`,
+				method: 'GET',
+				credentials: 'include',
+			}),
+		}),
 	}),
 })
 
-export const { useGetCurrentUserQuery, useGetUserProgressQuery } = authApi
+export const { useGetCurrentUserQuery, useGetUserProgressQuery, useGetLeaderboardQuery } = authApi
