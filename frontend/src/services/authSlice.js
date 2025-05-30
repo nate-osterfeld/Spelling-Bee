@@ -13,7 +13,7 @@ export const authApi = createApi({
 		}),
 		getUserProgress: builder.query({
 			query: () => ({
-				url: '/api/words/progress',
+				url: '/api/stats/progress',
 				method: 'GET',
 				credentials: 'include',
 			}),
