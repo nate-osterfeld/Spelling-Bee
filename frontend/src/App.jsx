@@ -1,5 +1,5 @@
 import './App.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom'
 import HomePage from './pages/home/HomePage'
 import GamePage from './pages/game/GamePage'
 import { Keyboard } from './components/Keyboard'
@@ -16,7 +16,8 @@ const router = createBrowserRouter([
       { path: '/', element: <HomePage /> },
       { path: '/play/:level', element: <GamePage /> },
       { path: '/progress', element: <ProgressPage /> },
-      { path: '/leaderboard', element: <LeaderboardPage /> },
+      { path: '/leaderboard', loader: () => redirect('/leaderboard/1') },
+      { path: '/leaderboard/:page', element: <LeaderboardPage /> },
       { path: '/keyboard', element: <Keyboard /> }
     ]
   }

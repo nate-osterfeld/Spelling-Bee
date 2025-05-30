@@ -1,10 +1,12 @@
 import './LeaderboardPage.css';
 import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useGetLeaderboardQuery } from '../../services/authSlice.js';
 
 function LeaderboardPage() {
-    const [page, setPage] = useState(1);
-    const pageSize = 4;
+    const { page } = useParams()
+    const navigate = useNavigate()
+    const pageSize = 5
 
     const { data, error, isLoading } = useGetLeaderboardQuery({ page, pageSize });
     console.log('leaderboard', data);
@@ -50,7 +52,7 @@ function LeaderboardPage() {
             <div className="pagination-controls">
                 <button
                     className="pagination-button"
-                    onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                    onClick={() => navigate(`/leaderboard/${Math.max(page - 1, 1)}`)}
                     disabled={page === 1}
                 >
                     Previous
@@ -58,7 +60,7 @@ function LeaderboardPage() {
                 <span>Page {page}</span>
                 <button
                     className="pagination-button"
-                    onClick={() => setPage((prev) => prev + 1)}
+                    onClick={() => navigate(`/leaderboard/${parseInt(page) + 1}`)}
                     disabled={data.length < pageSize}
                 >
                     Next

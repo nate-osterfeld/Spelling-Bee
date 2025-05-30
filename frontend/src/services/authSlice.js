@@ -20,7 +20,7 @@ export const authApi = createApi({
 		}),
 		getLeaderboard: builder.query({
 			query: ({ page = 1, pageSize = 25 }) => ({
-				url: `/api/stats/leaderboard?page=${page}&pageSize=${pageSize}`,
+				url: `/api/stats/leaderboard/${page}/?pageSize=${pageSize}`,
 				method: 'GET',
 				credentials: 'include',
 			}),
