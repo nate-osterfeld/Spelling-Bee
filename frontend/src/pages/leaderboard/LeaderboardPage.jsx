@@ -6,7 +6,7 @@ import { useGetLeaderboardQuery } from '../../services/authSlice.js';
 function LeaderboardPage() {
     const { page } = useParams()
     const navigate = useNavigate()
-    const pageSize = 5
+    const pageSize = 10
 
     const { data, error, isLoading } = useGetLeaderboardQuery({ page, pageSize });
     console.log('leaderboard', data);
@@ -24,47 +24,51 @@ function LeaderboardPage() {
     }
 
     return (
-        <div className="leaderboard-container">
-            <h2 className="leaderboard-title">Leaderboard</h2>
-            <table className="leaderboard-table">
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Username</th>
-                        <th>Easy Correct</th>
-                        <th>Medium Correct</th>
-                        <th>Hard Correct</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((user, index) => (
-                        <tr key={user.user_id}>
-                            <td>{(page - 1) * pageSize + index + 1}</td>
-                            <td>{user.email}</td>
-                            <td>{user.easy_correct_count}</td>
-                            <td>{user.medium_correct_count}</td>
-                            <td>{user.hard_correct_count}</td>
+        <div className="leaderboard__main-section">
+            <div className="leaderboard__main-wrapper">
+                <h2 className="leaderboard-title">Leaderboard</h2>
+                <table className="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Username</th>
+                            <th>Solved</th>
+                            <th>Acceptance</th>
+                            <th>Total</th>
+                            <th>Score</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {data.map((user, index) => (
+                            <tr key={user.user_id}>
+                                <td>{(page - 1) * pageSize + index + 1}</td>
+                                <td>{user.email}</td>
+                                <td>{user.easy_correct_count}</td>
+                                <td>{user.medium_correct_count}</td>
+                                <td>{user.hard_correct_count}</td>
+                                <td>{user.hard_correct_count}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
 
-            <div className="pagination-controls">
-                <button
-                    className="pagination-button"
-                    onClick={() => navigate(`/leaderboard/${Math.max(page - 1, 1)}`)}
-                    disabled={page === 1}
-                >
-                    Previous
-                </button>
-                <span>Page {page}</span>
-                <button
-                    className="pagination-button"
-                    onClick={() => navigate(`/leaderboard/${parseInt(page) + 1}`)}
-                    disabled={data.length < pageSize}
-                >
-                    Next
-                </button>
+                <div className="pagination-controls">
+                    <button
+                        className="pagination-button"
+                        onClick={() => navigate(`/leaderboard/${Math.max(page - 1, 1)}`)}
+                        disabled={page === 1}
+                    >
+                        Previous
+                    </button>
+                    <span>Page {page}</span>
+                    <button
+                        className="pagination-button"
+                        onClick={() => navigate(`/leaderboard/${parseInt(page) + 1}`)}
+                        disabled={data.length < pageSize}
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
         </div>
     );
