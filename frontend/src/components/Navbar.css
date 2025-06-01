@@ -61,6 +61,11 @@ nav {
     border-radius: 4px;
     position: relative;
 }
+.signup a {
+    text-decoration: none;
+    color: inherit;
+    opacity: .7;
+}
 .signup__header {
     color: #000000bf;
     font-size: 32px;
@@ -203,4 +208,5 @@ button.signup__submit {
     color: #0b77bd;
     font-weight: bold;
     text-decoration: none;
+    margin-top: 5rem;
 }

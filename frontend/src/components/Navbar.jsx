@@ -43,6 +43,11 @@ function Navbar() {
 								</Link>
 								<Link
 									onClick={() => forceCloseDropdown()}
+									to={`/account`}>
+									Settings
+								</Link>
+								<Link
+									onClick={() => forceCloseDropdown()}
 									to={`/leaderboard`}>
 									Leaderboard
 								</Link>

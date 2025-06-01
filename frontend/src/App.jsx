@@ -4,6 +4,7 @@ import HomePage from './pages/home/HomePage'
 import GamePage from './pages/game/GamePage'
 import { Keyboard } from './components/Keyboard'
 import Layout from './pages/Layout'
+import AccountPage from './pages/account/AccountPage'
 import ProgressPage from './pages/progress/ProgressPage'
 import LeaderboardPage from './pages/leaderboard/LeaderboardPage'
 // import { gameLoader } from './pages/game/gameLoader'
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <HomePage /> },
       { path: '/play/:level', element: <GamePage /> },
+      { path: '/account', element: <AccountPage /> },
       { path: '/progress', element: <ProgressPage /> },
       { path: '/u/:userId', element: <ProgressPage /> },
       { path: '/leaderboard', loader: () => redirect('/leaderboard/1') },
