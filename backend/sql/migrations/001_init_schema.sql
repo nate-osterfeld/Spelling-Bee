@@ -14,6 +14,7 @@ CREATE TABLE public.users (
     password VARCHAR(256),
     salt VARCHAR(100),
     CONSTRAINT users_email_key UNIQUE (email),
+    CONSTRAINT users_name_key UNIQUE (name),
     CONSTRAINT users_google_id_key UNIQUE (google_id)
 );
 
