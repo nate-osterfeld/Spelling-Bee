@@ -8,6 +8,12 @@
     padding: 1.2rem;
 }
 
+.progress__username {
+    text-align: center;
+    color: rgba(0, 0, 0, 0.75);
+    margin: 14px 0 35px 0;
+}
+
 @media (max-width: 415px) {
     .progress__main-wrapper {
         padding: .75rem;

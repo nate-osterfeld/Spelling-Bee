@@ -42,6 +42,7 @@ router.get('/progress', utils.authMiddleware, async (req, res) => {
 		return res.status(200).json({
 			success: true,
 			data: history,
+			username: req.user.name,
 			percentile: percentile
 		})
 	}
@@ -55,7 +56,13 @@ router.get('/u/:userId', async (req, res) => {
 		'FROM wordshistory ' +
 		'JOIN words ON wordshistory.word_id = words.id ' +
 		'WHERE user_id = $1'
+
+	const query_SelectUsername =
+		'SELECT name ' +
+		'FROM users ' +
+		'WHERE id = $1'
 		
+	let { rows: username } = await pool.query(query_SelectUsername, [req.params.userId])
 	let { rows: history } = await pool.query(query_SelectProgress, [req.params.userId])
 	let { rows: accuracy } = await pool.query(queries['analytics/get_weighted_accuracy'])
 
@@ -73,6 +80,7 @@ router.get('/u/:userId', async (req, res) => {
 	return res.status(200).json({
 		success: true,
 		data: history,
+		username: username[0].name,
 		percentile: percentile
 	})
 })

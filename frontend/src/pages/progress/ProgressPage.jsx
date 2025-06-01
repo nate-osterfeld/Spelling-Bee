@@ -54,6 +54,7 @@ function ProgressPage() {
 						<Loading />
 					) : (
 						<>
+							<h1 className='progress__username'>{data.username}</h1>
 							<ProgressSummary data={progressData} percentile={percentile} />
 							<ProgressTable data={progressData} isLoading={isLoading} error={error} />
 						</>
