@@ -10,6 +10,30 @@ router.get('/current-user', utils.authMiddleware, (req, res) => {
 	}
 })
 
+router.patch('/username', utils.authMiddleware, async (req, res) => {
+	if (!req.user) {
+    	return res.status(401).json({ success: false, message: "Unauthorized" })
+  	}
+	
+	try {
+		const query_SelectUsername = 
+		'SELECT name FROM users WHERE name = $1'
+		
+		const { rows } = await pool.query(query_SelectUsername, [req.body.username])
+		
+		if (rows.length) {
+			return res.status(409).json({ success: false, message: `User "${rows[0].name}" already exists`})
+		}
+		
+		const query_UpdateUsername = 'UPDATE users SET name = $1 WHERE id = $2'
+		await pool.query(query_UpdateUsername, [req.body.username, req.user.id])
+		
+		res.status(200).json({ success: true, message: "Username update successful" })
+	} catch (e) {
+		return res.status(500).json({ success: false, message: "Unable to update username" })
+	}
+})
+
 router.post('/logout', utils.authMiddleware, (req, res) => {
 	res.clearCookie('jwt', {
 		httpOnly: true,
