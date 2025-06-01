@@ -49,4 +49,32 @@ router.get('/progress', utils.authMiddleware, async (req, res) => {
 	return res.json({ success: false, message: 'User not logged in' })
 })
 
+router.get('/u/:userId', async (req, res) => {
+	const query_SelectProgress =
+		'SELECT word, level, is_correct, correct, incorrect, created_at ' +
+		'FROM wordshistory ' +
+		'JOIN words ON wordshistory.word_id = words.id ' +
+		'WHERE user_id = $1'
+		
+	let { rows: history } = await pool.query(query_SelectProgress, [req.params.userId])
+	let { rows: accuracy } = await pool.query(queries['analytics/get_weighted_accuracy'])
+
+	const userScore = accuracy.find((score) => score.user_id === req.params.userId) // Find weighted accuracy for user
+
+	let percentile = null
+	if (userScore) {
+		const userBeats = accuracy.filter(
+			(score) => userScore.weighted_accuracy > score.weighted_accuracy,
+		).length
+
+		percentile = ((userBeats + 1) / accuracy.length) * 100
+	}
+
+	return res.status(200).json({
+		success: true,
+		data: history,
+		percentile: percentile
+	})
+})
+
 module.exports = router
