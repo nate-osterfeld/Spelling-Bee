@@ -59,13 +59,13 @@ router.get('/u/:userId', async (req, res) => {
 	let { rows: history } = await pool.query(query_SelectProgress, [req.params.userId])
 	let { rows: accuracy } = await pool.query(queries['analytics/get_weighted_accuracy'])
 
-	const userScore = accuracy.find((score) => score.user_id === req.params.userId) // Find weighted accuracy for user
+	const userScore = accuracy.find((score) => score.user_id === parseInt(req.params.userId)) // Find weighted accuracy for user
 
 	let percentile = null
 	if (userScore) {
 		const userBeats = accuracy.filter(
 			(score) => userScore.weighted_accuracy > score.weighted_accuracy,
-		).length
+		).length // Count how many user is ahead of
 
 		percentile = ((userBeats + 1) / accuracy.length) * 100
 	}
