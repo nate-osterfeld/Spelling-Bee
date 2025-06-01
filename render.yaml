@@ -1,0 +1,36 @@
+services:
+  - type: static
+    name: speebee
+    env: static
+    buildCommand: npm install; npm run build;
+    staticPublishPath: frontend/dist
+    rootDir: frontend
+    buildFilter:
+      paths:
+        - frontend/**
+    envVars:
+      - key: CI
+        value: false
+      - key: VITE_BACKEND_URL
+        value: https://speebee-api.onrender.com
+    rewrites:
+      - source: /*
+        destination: /index.html
+
+  - type: web
+    name: speebee-api
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node app.js
+    rootDir: backend
+    buildFilter:
+      paths:
+        - backend/**
+    envVars:
+      - key: FRONTEND_URL
+        value: https://speebee.onrender.com
+      - key: GOOGLE_CALLBACK_URL
+        value: https://speebee-api.onrender.com/auth/google/callback
+      - key: GOOGLE_CLIENT_ID
+        value: 676417543460-5lmbvi6vn1tt0d4gj0oo6idqmpr7o986.apps.googleusercontent.com
