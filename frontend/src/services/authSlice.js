@@ -18,6 +18,14 @@ export const authApi = createApi({
 				credentials: 'include',
 			}),
 		}),
+		// Eventually change to have a public account page to display (display progress page for now)
+		getUserProgressById: builder.query({
+			query: ({ userId }) => ({
+				url: `/api/stats/u/${userId}`, // Will have username instead of userId
+				method: 'GET',
+				credentials: 'include',
+			}),
+		}),
 		getLeaderboard: builder.query({
 			query: ({ page = 1, pageSize = 25 }) => ({
 				url: `/api/stats/leaderboard/${page}/?pageSize=${pageSize}`,
@@ -28,4 +36,4 @@ export const authApi = createApi({
 	}),
 })
 
-export const { useGetCurrentUserQuery, useGetUserProgressQuery, useGetLeaderboardQuery } = authApi
+export const { useGetCurrentUserQuery, useGetUserProgressQuery, useGetUserProgressByIdQuery, useGetLeaderboardQuery } = authApi

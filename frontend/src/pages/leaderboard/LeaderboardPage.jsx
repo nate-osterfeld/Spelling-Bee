@@ -2,7 +2,7 @@ import './LeaderboardPage.css'
 import leftCaret from '../../assets/angle-left-icon.svg'
 import rightCaret from '../../assets/angle-right-icon.svg'
 import DonutChart from './DonutChart.jsx'
-import { useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useGetLeaderboardQuery } from '../../services/authSlice.js'
 import Loading from '../../components/Loading.jsx'
 
@@ -98,13 +98,17 @@ function LeaderboardPage() {
 								return (
 									<tr key={user.user_id}>
 										<td>{(page - 1) * pageSize + index + 1}</td>
-										<td>{name.charAt(0).toUpperCase() + name.slice(1)}</td>
+										<td>
+											<Link to={`/u/${user.user_id}`} className='leaderboard-user'>
+												{name.charAt(0).toUpperCase() + name.slice(1)}
+											</Link>
+										</td>
 										<td>
 											<DonutChart
 												data={chartData}
-                                                legend={totalSolved}
+												legend={totalSolved}
 												size={70}
-                                                innerRadius={25}
+												innerRadius={25}
 											/>
 										</td>
 										<td>{acceptancePercent} %</td>

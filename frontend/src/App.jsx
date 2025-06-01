@@ -16,6 +16,7 @@ const router = createBrowserRouter([
       { path: '/', element: <HomePage /> },
       { path: '/play/:level', element: <GamePage /> },
       { path: '/progress', element: <ProgressPage /> },
+      { path: '/u/:userId', element: <ProgressPage /> },
       { path: '/leaderboard', loader: () => redirect('/leaderboard/1') },
       { path: '/leaderboard/:page', element: <LeaderboardPage /> },
       { path: '/keyboard', element: <Keyboard /> }

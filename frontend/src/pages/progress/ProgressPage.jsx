@@ -1,12 +1,24 @@
 import './ProgressPage.css'
 import React, { useEffect, useState } from 'react'
-import { useGetUserProgressQuery } from '../../services/authSlice.js'
+import { useParams } from 'react-router-dom'
+import { useGetUserProgressQuery, useGetUserProgressByIdQuery } from '../../services/authSlice.js'
 import ProgressSummary from './ProgressSummary.jsx'
 import ProgressTable from './ProgressTable.jsx'
 import Loading from '../../components/Loading.jsx'
 
+// NOTE: This page is loaded on 2 routes! (/progress and /u/:userId)
+//       1) If route param `userId` exists -> run "byId" rtkq hook to retrieve specific user
+//       2) If route param `userId` doesn't exit -> run "current" rtqk hook to retrieve current user signed in
 function ProgressPage() {
-	const { data, error, isLoading } = useGetUserProgressQuery()
+	const { userId } = useParams()
+
+	const byIdResult = useGetUserProgressByIdQuery({ userId }, { skip: !userId }) // skip call if userId doesn't exist (returns specific user)
+	const currentResult = useGetUserProgressQuery({ skip: !!userId }) // skip call if userId does exist (returns user signed in)
+
+	const data = userId ? byIdResult.data : currentResult.data
+	const error = userId ? byIdResult.error : currentResult.error
+	const isLoading = userId ? byIdResult.isLoading : currentResult.isLoading
+
 	const [progressData, setProgressData] = useState([])
 	const [percentile, setPercentile] = useState(0)
 	console.log('progress data', data)

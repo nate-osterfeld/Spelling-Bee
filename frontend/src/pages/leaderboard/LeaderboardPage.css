@@ -94,3 +94,8 @@
     margin: 0 12px;
     color: rgba(0, 0, 0, 0.75);
 }
+
+.leaderboard-user {
+    text-decoration: none;
+    color: inherit;
+}
