@@ -7,10 +7,16 @@ router.get('/leaderboard/:page', utils.authMiddleware, async (req, res) => {
     const page = parseInt(req.params.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 5;
     const offset = (page - 1) * pageSize;
+	const query_UserCount = 
+		'SELECT COUNT(DISTINCT users.id) ' +
+		'FROM users ' +
+		'JOIN wordshistory ON wordshistory.user_id = users.id'
 
     try {
-        const result = await pool.query(queries['analytics/get_leaderboard_ranks'], [pageSize, offset]);
-        res.json(result.rows);
+        const { rows: ranks } = await pool.query(queries['analytics/get_leaderboard_ranks'], [pageSize, offset]);
+		const { rows: userCount } = await pool.query(query_UserCount)
+		numOfPages = Math.ceil(userCount[0].count / pageSize)
+        res.json({ numOfPages, ranks });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Failed to fetch leaderboard' });

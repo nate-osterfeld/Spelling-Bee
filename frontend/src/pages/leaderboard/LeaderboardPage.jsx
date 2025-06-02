@@ -26,7 +26,7 @@ function LeaderboardPage() {
 		)
 	}
 
-	if (!data || !Array.isArray(data)) {
+	if (!data) {
 		return <div className='leaderboard-container'>No leaderboard data available.</div>
 	}
 
@@ -47,8 +47,8 @@ function LeaderboardPage() {
 							</tr>
 						</thead>
 						<tbody>
-							{data.map((user, index) => {
-								const name = user.email.split(/[.@]/)[0]
+							{data.ranks.map((user, index) => {
+								const name = user.name
 								const totalAttempts = user.total_attempts
 								const totalSolved =
 									parseInt(user.easy_correct_count) +
@@ -128,11 +128,11 @@ function LeaderboardPage() {
 					>
                         <img src={leftCaret} className='angle-right' alt='next page' />
 					</button>
-					<span>{page} of ?</span>
+					<span>{page} of {data.numOfPages}</span>
 					<button
 						className='pagination-button'
 						onClick={() => navigate(`/leaderboard/${parseInt(page) + 1}`)}
-						disabled={data.length < pageSize}
+						disabled={data.ranks.length < pageSize}
 					>
                         <img src={rightCaret} className='angle-right' alt='next page' />
 					</button>

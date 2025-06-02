@@ -2,6 +2,7 @@
 SELECT
     u.id AS user_id,                           -- The user's ID
     u.email,                                   -- The user's email
+    u.name,                                    -- The user's username (name)
 
     COUNT(*) AS total_attempts,                -- Total number of words this user has attempted
 
