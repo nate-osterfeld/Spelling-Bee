@@ -36,11 +36,11 @@ export const authApi = createApi({
 			}),
 		}),
 		updateUsername: builder.mutation({
-			query: ({ newUsername }) => ({
+			query: ({ username }) => ({
 				url: 'api/user/username',
 				method: 'PATCH',
 				credentials: 'include',
-				body: { username: newUsername }
+				body: { username }
 			}),
 			invalidatesTags: ['User'] // Invalidate 'User' tags
     	})
