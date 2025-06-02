@@ -1,0 +1,99 @@
+.separator {
+    width: 100%;
+    border: 1px solid #dddddd40;
+    margin: 10px 0;
+}
+
+.account-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.account-wrapper {
+    margin: 1.95rem;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.acc-section-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.acc-section-description {
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 16px;
+}
+
+.input-field {
+    width: 96%;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+}
+
+.acc-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s ease;
+}
+
+.button-save {
+    background: #2563eb;
+    color: #fff;
+}
+
+.button-save:hover {
+    background: #1d4ed8;
+}
+
+.button-delete {
+    background: #f3f4f6;
+    color: #333;
+}
+
+.button-delete:hover {
+    background: #e5e7eb;
+}
+
+.integrated-account {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.integrated-account span {
+    font-size: 0.85rem;
+}
+
+.connected {
+    background: #d1fae5;
+    color: #065f46;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 999px;
+}
+
+.unconnected {
+    all: unset;
+    cursor: pointer;
+    color: #065f46;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 999px;
+}
