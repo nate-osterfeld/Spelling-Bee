@@ -10,6 +10,7 @@ export const authApi = createApi({
 				method: 'GET',
 				credentials: 'include',
 			}),
+			providesTags: ['User'] // Auto refetch if invalidated
 		}),
 		getUserProgress: builder.query({
 			query: () => ({
@@ -17,6 +18,7 @@ export const authApi = createApi({
 				method: 'GET',
 				credentials: 'include',
 			}),
+			providesTags: ['User'] // Auto refetch if invalidated
 		}),
 		// Eventually change to have a public account page to display (display progress page for now)
 		getUserProgressById: builder.query({
@@ -33,7 +35,22 @@ export const authApi = createApi({
 				credentials: 'include',
 			}),
 		}),
+		updateUsername: builder.mutation({
+			query: ({ newUsername }) => ({
+				url: 'api/user/username',
+				method: 'PATCH',
+				credentials: 'include',
+				body: { username: newUsername }
+			}),
+			invalidatesTags: ['User'] // Invalidate 'User' tags
+    	})
 	}),
 })
 
-export const { useGetCurrentUserQuery, useGetUserProgressQuery, useGetUserProgressByIdQuery, useGetLeaderboardQuery } = authApi
+export const { 
+	useGetCurrentUserQuery,
+	useGetUserProgressQuery,
+	useGetUserProgressByIdQuery,
+	useGetLeaderboardQuery,
+	useUpdateUsernameMutation
+ } = authApi

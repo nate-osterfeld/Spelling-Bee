@@ -1,8 +1,12 @@
 import './AccountPage.css'
+import UpdateUsernameForm from './UpdateUsernameForm'
 
 function AccountPage() {
     return (
-        <div>Account</div>
+        <div>
+            Account
+            <UpdateUsernameForm />
+        </div>
     )
 }
 
