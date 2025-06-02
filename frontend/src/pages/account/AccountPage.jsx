@@ -1,15 +1,30 @@
 import './AccountPage.css'
-import React, { useState } from 'react';
-import { useGetCurrentUserQuery } from '../../services/authSlice';
+import { useState } from 'react';
+import { useGetCurrentUserQuery, useUpdateUsernameMutation } from '../../services/authSlice';
+import Loading from '../../components/Loading.jsx'
 
 export default function AccountPage() {
-    const { data, isLoading, error } = useGetCurrentUserQuery()
+    const { data, isLoading } = useGetCurrentUserQuery()
+    const [updateUsername, { error }] = useUpdateUsernameMutation()
     console.log('user', data)
-    
+
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
+
+    const handleSubmit = async (e) => {
+        try {
+            await updateUsername({ username }).unwrap()
+            setUsername('')
+        } catch (err) {
+            // Error handled by RTK Query hook (accessible via `error.data`)
+        }
+    }
+
+    if (isLoading) {
+        return <Loading />
+    }
 
     return (
         <div className="account-container">
@@ -62,6 +77,11 @@ export default function AccountPage() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
+                {error && (
+                    <div style={{ color: 'red' }}>
+                        {'data' in error ? error.data.message : 'Update failed'}
+                    </div>
+                )}
 
                 <div className="separator"></div>
 
@@ -105,7 +125,9 @@ export default function AccountPage() {
 
                 {/* Save changes */}
                 <div style={{ marginTop: '32px' }}>
-                    <button className="acc-button button-save">Save changes</button>
+                    <button
+                        onClick={handleSubmit}
+                        className="acc-button button-save">Save changes</button>
                 </div>
             </div>
         </div>

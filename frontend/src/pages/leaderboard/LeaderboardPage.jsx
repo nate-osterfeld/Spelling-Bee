@@ -33,7 +33,7 @@ function LeaderboardPage() {
 	return (
 		<div className='leaderboard__main-section'>
 			<div className='leaderboard__main-wrapper'>
-				<h2 className='leaderboard-title'>Global Ranking</h2>
+				<h2 className='leaderboard-title'>High Scores</h2>
 
 				<div className='table-container'>
 					<table className='leaderboard-table'>

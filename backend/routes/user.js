@@ -22,7 +22,7 @@ router.patch('/username', utils.authMiddleware, async (req, res) => {
 		const { rows } = await pool.query(query_SelectUsername, [req.body.username])
 		
 		if (rows.length) {
-			return res.status(409).json({ success: false, message: `User "${rows[0].name}" already exists`})
+			return res.status(409).json({ success: false, message: `Username already exists`})
 		}
 		
 		const query_UpdateUsername = 'UPDATE users SET name = $1 WHERE id = $2'
