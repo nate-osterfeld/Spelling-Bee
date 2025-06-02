@@ -10,10 +10,10 @@ router.get('/current-user', utils.authMiddleware, (req, res) => {
 	}
 })
 
-router.patch('/username', utils.authMiddleware, async (req, res) => {
+router.patch('/update-username', utils.authMiddleware, async (req, res) => {
 	if (!req.user) {
     	return res.status(401).json({ success: false, message: "Unauthorized" })
-  	}
+	}
 	
 	try {
 		const query_SelectUsername = 
@@ -32,6 +32,14 @@ router.patch('/username', utils.authMiddleware, async (req, res) => {
 	} catch (e) {
 		return res.status(500).json({ success: false, message: "Unable to update username" })
 	}
+})
+
+router.patch('/update-password', utils.authMiddleware, async (req, res) => {
+	if (!req.user) {
+		return res.status(401).json({ success: false, message: 'Unauthorized' })
+	}
+
+	return res.status(409).json({ success: false, message: 'Error changing password' })
 })
 
 router.post('/logout', utils.authMiddleware, (req, res) => {

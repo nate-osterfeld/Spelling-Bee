@@ -37,10 +37,19 @@ export const authApi = createApi({
 		}),
 		updateUsername: builder.mutation({
 			query: ({ username }) => ({
-				url: 'api/user/username',
+				url: 'api/user/update-username',
 				method: 'PATCH',
 				credentials: 'include',
 				body: { username }
+			}),
+			invalidatesTags: ['User'] // Invalidate 'User' tags
+    	}),
+		updatePassword: builder.mutation({
+			query: ({ currentPassword, newPassword }) => ({
+				url: 'api/user/update-password',
+				method: 'PATCH',
+				credentials: 'include',
+				body: { currentPassword, newPassword }
 			}),
 			invalidatesTags: ['User'] // Invalidate 'User' tags
     	})
@@ -52,5 +61,6 @@ export const {
 	useGetUserProgressQuery,
 	useGetUserProgressByIdQuery,
 	useGetLeaderboardQuery,
-	useUpdateUsernameMutation
+	useUpdateUsernameMutation,
+	useUpdatePasswordMutation
  } = authApi
