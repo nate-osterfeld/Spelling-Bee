@@ -12,25 +12,24 @@ router.get('/current-user', utils.authMiddleware, (req, res) => {
 
 router.patch('/update-username', utils.authMiddleware, async (req, res) => {
 	if (!req.user) {
-    	return res.status(401).json({ success: false, message: "Unauthorized" })
+		return res.status(401).json({ success: false, message: 'Unauthorized' })
 	}
-	
+
 	try {
-		const query_SelectUsername = 
-		'SELECT name FROM users WHERE name = $1'
-		
+		const query_SelectUsername = 'SELECT name FROM users WHERE name = $1'
+
 		const { rows } = await pool.query(query_SelectUsername, [req.body.username])
-		
+
 		if (rows.length) {
-			return res.status(409).json({ success: false, message: `Username already exists`})
+			return res.status(409).json({ success: false, message: `Username already exists` })
 		}
-		
+
 		const query_UpdateUsername = 'UPDATE users SET name = $1 WHERE id = $2'
 		await pool.query(query_UpdateUsername, [req.body.username, req.user.id])
-		
-		res.status(200).json({ success: true, message: "Username update successful" })
+
+		res.status(200).json({ success: true, message: 'Username update successful' })
 	} catch (e) {
-		return res.status(500).json({ success: false, message: "Unable to update username" })
+		return res.status(500).json({ success: false, message: 'Unable to update username' })
 	}
 })
 
@@ -38,8 +37,33 @@ router.patch('/update-password', utils.authMiddleware, async (req, res) => {
 	if (!req.user) {
 		return res.status(401).json({ success: false, message: 'Unauthorized' })
 	}
+	if (!req.user.password && req.user.google_id) {
+		return res.status(400).json({ success: false, message: "No password required - Your account is linked to Google for sign-in"})
+	}
+	if (req.body.newPassword.length <= 3) {
+		return res.status(400).json({ success: false, message: 'Password must be longer than 3 characters' })
+	}
 
-	return res.status(409).json({ success: false, message: 'Error changing password' })
+	// Verify current password
+	const query_selectUserById = 'SELECT * FROM users WHERE id = $1'
+	const user = await pool.query(query_selectUserById, [req.user.id])
+	const { password, salt } = user.rows[0]
+	const isValid = utils.verifyPassword(req.body.currentPassword, password, salt)
+
+	if (!isValid) {
+		return res.status(400).json({ success: false, message: 'Password entered is incorrect 😕' })
+	}
+
+	// Generate new password
+	const query_saveUser = 'UPDATE users SET password = $1, salt = $2 WHERE id = $3'
+	const { salt: newSalt, hash: newHash } = utils.genPassword(req.body.newPassword)
+	try {
+		await pool.query(query_saveUser, [newHash, newSalt, req.user.id])
+		res.status(200).json({ success: true, message: 'New password set!' })
+	} catch (e) {
+		console.error(e)
+		return res.status(500).json({ success: false, message: 'Error changing password' })
+	}
 })
 
 router.post('/logout', utils.authMiddleware, (req, res) => {
@@ -52,28 +76,29 @@ router.post('/logout', utils.authMiddleware, (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-    const query_selectUserByEmail = 'SELECT * FROM users WHERE email = $1'
-    let { rows } = await pool.query(query_selectUserByEmail, [req.body.email])
+	const query_selectUserByEmail = 'SELECT * FROM users WHERE email = $1'
+	let { rows } = await pool.query(query_selectUserByEmail, [req.body.email])
 
-    if (rows.length === 0) {
-        const { salt, hash } = utils.genPassword(req.body.password)
+	if (rows.length === 0) {
+		const { salt, hash } = utils.genPassword(req.body.password)
 
-        const query_saveUser = 'INSERT INTO users (email, password, salt, acc_type) VALUES ($1, $2, $3, $4)'
-        const { rowCount } = await pool.query(query_saveUser, [req.body.email, hash, salt, 'email'])
-        if (rowCount === 1) {
-            res.redirect(`${process.env.FRONTEND_URL}?registration=successful`)
-        } else {
-            res.json({ success: false, message: 'Unable to save user' })
-        }
-    } else {
-        res.json({ success: false, message: 'User with email already exists' })
-    }
+		const query_saveUser =
+			'INSERT INTO users (email, password, salt, acc_type) VALUES ($1, $2, $3, $4)'
+		const { rowCount } = await pool.query(query_saveUser, [req.body.email, hash, salt, 'email'])
+		if (rowCount === 1) {
+			res.redirect(`${process.env.FRONTEND_URL}?registration=successful`)
+		} else {
+			res.json({ success: false, message: 'Unable to save user' })
+		}
+	} else {
+		res.json({ success: false, message: 'User with email already exists' })
+	}
 })
 
 router.post('/login', async (req, res) => {
 	const query_selectUserByEmail = 'SELECT * FROM users WHERE email = $1'
 	const user = await pool.query(query_selectUserByEmail, [req.body.email])
-	
+
 	if (user.rowCount === 1) {
 		const { id, password, salt } = user.rows[0]
 		const isValid = utils.verifyPassword(req.body.password, password, salt)
@@ -81,11 +106,11 @@ router.post('/login', async (req, res) => {
 		if (isValid) {
 			const { token, expiresIn } = utils.issueJWT(id) // serialize user with id
 
-			res.cookie("jwt", token, {
+			res.cookie('jwt', token, {
 				httpOnly: true,
 				secure: process.env.NODE_ENV === 'production',
 				sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
-				expires: expiresIn * 1000
+				expires: expiresIn * 1000,
 			})
 
 			res.redirect(`${process.env.FRONTEND_URL}/?sign-in-successful`)

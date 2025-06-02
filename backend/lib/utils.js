@@ -59,7 +59,7 @@ async function authMiddleware(req, res, next) {
 				})
 
 				const query_selectUserById =
-					'SELECT id, email, google_id, name FROM users WHERE id = $1'
+					'SELECT id, email, google_id, name, password FROM users WHERE id = $1'
 				const user = await pool.query(query_selectUserById, [verification.sub])
 
 				req.user = user.rows[0]
