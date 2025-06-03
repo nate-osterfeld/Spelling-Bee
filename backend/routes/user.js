@@ -89,4 +89,21 @@ router.post('/login', async (req, res) => {
 	}
 })
 
+router.get('/saved-words', utils.authMiddleware, async (req, res) => {
+	if (!req.user) {
+		return res.json({ success: false, message: 'Please sign in to access saved words' })
+	}
+
+	try {
+		const query_getFavoriteWords = 
+			"SELECT * FROM wordssaved " +
+			"JOIN words ON words.id = wordssaved.word_id " +
+			"WHERE user_id = $1"
+		const { rows } = await pool.query(query_getFavoriteWords, [req.user.id])
+		return res.status(200).json({ success: true, words: rows })
+	} catch (e) {
+		return res.status(500).json({ success: false, message: 'Unable to retrieve words' })
+	}
+})
+
 module.exports = router

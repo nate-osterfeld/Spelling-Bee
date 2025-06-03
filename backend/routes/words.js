@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 })
 
 // Save word to user's history
-router.post('/save', utils.authMiddleware, async (req, res) => {
+router.post('/save-to-history', utils.authMiddleware, async (req, res) => {
 	const { isCorrect, word } = req.body
 
 	if (req.user) {
@@ -51,6 +51,22 @@ router.post('/save', utils.authMiddleware, async (req, res) => {
 	}
 
 	return res.json({ message: 'Please sign in to save words to your history' })
+})
+
+router.post('/saved-words', utils.authMiddleware, async (req, res) => {
+	if (!req.user) {
+		return res.status(400).json({ success: false, message: 'Please sign in to save words to your account' })
+	}
+
+	const { wordId } = req.body
+
+	const query_SaveWord = 'INSERT INTO wordssaved (user_id, word_id) VALUES ($1, $2)'
+	try {
+		await pool.query(query_SaveWord, [req.user.id, wordId])
+		return res.status(200).json({ success: true, message: 'Word saved to favorites' })
+	} catch (e) {
+		return res.status(500).json({ success: false, message: 'Unable to save word' })
+	}
 })
 
 module.exports = router
