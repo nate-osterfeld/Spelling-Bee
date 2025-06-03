@@ -18,7 +18,7 @@ export const authApi = createApi({
 				method: 'GET',
 				credentials: 'include',
 			}),
-			providesTags: ['User'] // Auto refetch if invalidated
+			providesTags: ['User', 'Progress'] // Auto refetch if invalidated
 		}),
 		// Eventually change to have a public account page to display (display progress page for now)
 		getUserProgressById: builder.query({
@@ -52,7 +52,16 @@ export const authApi = createApi({
 				body: { currentPassword, newPassword }
 			}),
 			invalidatesTags: ['User'] // Invalidate 'User' tags
-    	})
+    	}),
+		addWordToFavorites: builder.mutation({
+			query: ({ word_id }) => ({
+				url: 'api/words/save-to-favorites',
+				method: 'POST',
+				credentials: 'include',
+				body: { word_id }
+			}),
+			invalidateTags: ['Progress'] // Invalidate 'Progress' tags
+		})
 	}),
 })
 
@@ -62,5 +71,6 @@ export const {
 	useGetUserProgressByIdQuery,
 	useGetLeaderboardQuery,
 	useUpdateUsernameMutation,
-	useUpdatePasswordMutation
+	useUpdatePasswordMutation,
+	useAddWordToFavoritesMutation
  } = authApi

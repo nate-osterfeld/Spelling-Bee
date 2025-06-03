@@ -17,8 +17,11 @@ import {
 	getPaginationRowModel,
 	flexRender,
 } from '@tanstack/react-table'
+import { useAddWordToFavoritesMutation } from '../../services/authSlice'
 
 const ProgressTable = ({ data }) => {
+	const [addWordToFavorites, { error }] = useAddWordToFavoritesMutation()
+
 	const [globalFilter, setGlobalFilter] = useState('')
 	const [selectedDifficulties, setSelectedDifficulties] = useState([])
 	const [filteredData, setFilteredData] = useState(data)
@@ -45,6 +48,16 @@ const ProgressTable = ({ data }) => {
 		return () => document.removeEventListener('mousedown', handleClickOutside)
 	}, [])
 
+	const onSaveWord = async ({ word_id }) => {
+		console.log('row', word_id)
+		try {
+			await addWordToFavorites({ word_id })
+			// update icon (auto refetch as well)
+		} catch (e) {
+			// Error handled by RTK Query hook (accessible via `error.data`)
+		}
+	}
+
     const formatDate = (date) => {
         return new Date(date).toLocaleString('en-US', {
             month: 'long',
@@ -55,6 +68,13 @@ const ProgressTable = ({ data }) => {
 
 	const columns = useMemo(
 		() => [
+			{
+				accessorKey: 'saved',
+				header: '',
+				cell: ({ row }) => {
+					return <button onClick={() => onSaveWord(row.original)}>save</button>
+				}
+			},
 			{
 				accessorKey: 'created_at',
 				header: 'Date',
