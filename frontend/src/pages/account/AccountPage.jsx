@@ -26,7 +26,7 @@ export default function AccountPage() {
 		if (newPassword1 === newPassword2) {
 			setPasswordError('')
 		}
-	}, [newPassword1, newPassword2, currentPassword, username])
+	}, [newPassword1, newPassword2, currentPassword])
 
 	const handleSubmit = async (e) => {
 		if (username) {
@@ -147,43 +147,49 @@ export default function AccountPage() {
 				<div className='separator'></div>
 
 				{/* Password */}
-				<p className='acc-section-title'>Password</p>
-				<p className='acc-section-description'>Modify your current password</p>
-				<input
-					type='password'
-					className='input-field'
-					placeholder='Current password'
-					value={currentPassword}
-					onChange={(e) => setCurrentPassword(e.target.value)}
-				/>
-				<input
-					type='password'
-					className='input-field'
-					placeholder='New password'
-					value={newPassword1}
-					onChange={(e) => setNewPassword1(e.target.value)}
-				/>
-				<input
-					type='password'
-					className='input-field'
-					placeholder='New password'
-					value={newPassword2}
-					onChange={(e) => setNewPassword2(e.target.value)}
-				/>
-				{/* Frontend error */}
-				{passwordError && <div style={{ color: 'red' }}>{passwordError}</div>}
+				{!data.google_id && (
+					<>
+						<p className='acc-section-title'>Password</p>
+						<p className='acc-section-description'>Modify your current password</p>
+						<input
+							type='password'
+							className='input-field'
+							placeholder='Current password'
+							value={currentPassword}
+							onChange={(e) => setCurrentPassword(e.target.value)}
+						/>
+						<input
+							type='password'
+							className='input-field'
+							placeholder='New password'
+							value={newPassword1}
+							onChange={(e) => setNewPassword1(e.target.value)}
+						/>
+						<input
+							type='password'
+							className='input-field'
+							placeholder='New password'
+							value={newPassword2}
+							onChange={(e) => setNewPassword2(e.target.value)}
+						/>
+						{/* Frontend error */}
+						{passwordError && <div style={{ color: 'red' }}>{passwordError}</div>}
 
-				{/* Backend error */}
-				{updatePasswordError && (
-					<div style={{ color: 'red' }}>
-						{'data' in updatePasswordError
-							? updatePasswordError.data.message
-							: 'Update failed'}
-					</div>
+						{/* Backend error */}
+						{updatePasswordError && (
+							<div style={{ color: 'red' }}>
+								{'data' in updatePasswordError
+									? updatePasswordError.data.message
+									: 'Update failed'}
+							</div>
+						)}
+
+						{/* Backend Success */}
+						{passwordSuccess && (
+							<div style={{ color: '#29e39e' }}>{passwordSuccess}</div>
+						)}
+					</>
 				)}
-
-				{/* Backend Success */}
-				{passwordSuccess && <div style={{ color: '#29e39e' }}>{passwordSuccess}</div>}
 
 				<div className='separator'></div>
 
