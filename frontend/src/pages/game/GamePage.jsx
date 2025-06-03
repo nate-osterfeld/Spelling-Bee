@@ -59,7 +59,7 @@ function GamePage() {
 			// Save word to user history
 			const isCorrect = (hints || tries) ? false : true
 			
-			await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/words/save`, {
+			await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/words/save-to-history`, {
 				isCorrect,
 				word,
 			}, { withCredentials: true })
