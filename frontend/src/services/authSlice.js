@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const authApi = createApi({
 	reducerPath: 'auth',
 	baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BACKEND_URL }),
+	tagTypes: ['User', 'Progress'],
 	endpoints: (builder) => ({
 		getCurrentUser: builder.query({
 			query: () => ({
@@ -67,7 +68,16 @@ export const authApi = createApi({
 				credentials: 'include',
 				body: { word_id }
 			}),
-			invalidateTags: ['Progress'] // Invalidate 'Progress' tags
+			invalidatesTags: ['Progress'] // Invalidate 'Progress' tags (could be redundant since ui handles)
+		}),
+		removeFromFavorites: builder.mutation({
+			query: ({ word_id }) => ({
+				url: 'api/words/unsave-from-favorites',
+				method: 'POST',
+				credentials: 'include',
+				body: { word_id }
+			}),
+			invalidatesTags: ['Progress'] // Invalidate 'Progress' tags (could be redundant since ui handles)
 		})
 	}),
 })
@@ -80,5 +90,6 @@ export const {
 	useUpdateUsernameMutation,
 	useUpdatePasswordMutation,
 	useGetFavoriteWordsQuery,
-	useAddWordToFavoritesMutation
+	useAddWordToFavoritesMutation,
+	useRemoveFromFavoritesMutation
  } = authApi

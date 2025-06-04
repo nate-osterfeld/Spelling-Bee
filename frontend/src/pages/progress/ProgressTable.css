@@ -162,27 +162,32 @@ th {
     position: relative;
 }
 
-th:nth-child(1) {
-    width: 150px;
-    padding-left: 12px;
-}
-
 /* First column */
-th:nth-child(2) {
-    width: 250px;
+th:nth-child(1) {
+    width: 50px;
+    cursor: default;
 }
 
 /* Second column */
-th:nth-child(3) {
-    width: 100px;
+th:nth-child(2) {
+    width: 135px;
 }
 
 /* Third column */
-th:nth-child(4) {
-    width: 120px;
+th:nth-child(3) {
+    width: 200px;
+    padding-left: 27px;
 }
 
 /* Fourth column */
+th:nth-child(4) {
+    width: 172px;
+}
+
+/* Fifth column */
+th:nth-child(5) {
+    width: 218px;
+}
 
 th:hover {
     color: #000000bf;
@@ -200,7 +205,7 @@ td:nth-child(1) {
     padding-left: 12px;
 }
 
-td:nth-child(2) {
+td:nth-child(3) {
     color: #000000bf;
     font-weight: 600;
     cursor: pointer;
@@ -209,14 +214,16 @@ td:nth-child(2) {
 td .progress-word-wrapper {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 6px;
 }
 
 td img.word-correct {
     height: 12px;
+    padding-bottom: 22px;
 }
 td img.word-incorrect {
     height: 14px;
+    padding-bottom: 22px;
 }
 
 td .progress-word {

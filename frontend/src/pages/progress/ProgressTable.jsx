@@ -8,7 +8,9 @@ import rightCaret from '../../assets/angle-right-icon.svg'
 import checkMark from '../../assets/checkmark-icon.svg'
 import xMark from '../../assets/xmark-icon.svg'
 import reset from '../../assets/rotate-left-icon.svg'
-import React, { useMemo, useState, useRef, useEffect } from 'react'
+import save from '../../assets/save-icon.svg'
+import unsave from '../../assets/unsave-icon.svg'
+import { useMemo, useState, useRef, useEffect } from 'react'
 import {
 	useReactTable,
 	getCoreRowModel,
@@ -17,10 +19,14 @@ import {
 	getPaginationRowModel,
 	flexRender,
 } from '@tanstack/react-table'
-import { useAddWordToFavoritesMutation } from '../../services/authSlice'
+import {
+	useAddWordToFavoritesMutation,
+	useRemoveFromFavoritesMutation
+} from '../../services/authSlice'
 
 const ProgressTable = ({ data }) => {
-	const [addWordToFavorites, { error }] = useAddWordToFavoritesMutation()
+	const [addWordToFavorites, { error: addWordError }] = useAddWordToFavoritesMutation()
+	const [removeWordFromFavorites, { error: removeWordError }] = useRemoveFromFavoritesMutation()
 
 	const [globalFilter, setGlobalFilter] = useState('')
 	const [selectedDifficulties, setSelectedDifficulties] = useState([])
@@ -51,30 +57,55 @@ const ProgressTable = ({ data }) => {
 	const onSaveWord = async ({ word_id }) => {
 		console.log('row', word_id)
 		try {
-			await addWordToFavorites({ word_id })
-			// update icon (auto refetch as well)
+			await addWordToFavorites({ word_id }).unwrap()
+			setFilteredData(prev => prev.map(word =>
+				word.word_id === word_id ? { ...word, is_saved: true } : word)
+			)
 		} catch (e) {
-			// Error handled by RTK Query hook (accessible via `error.data`)
+			// Error handled by RTK Query hook (accessible via `addWordError.data`)
 		}
 	}
 
-    const formatDate = (date) => {
-        return new Date(date).toLocaleString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric',
-        })
-    }
+	const onUnsaveWord = async ({ word_id }) => {
+		try {
+			await removeWordFromFavorites({ word_id }).unwrap()
+			setFilteredData(prev =>
+				prev.map(word =>
+					word.word_id === word_id ? { ...word, is_saved: false } : word)
+			)
+		} catch (e) {
+			// Error handled by RTK Query hook (accessible via `removeWordError.data`)
+		}
+	}
+
+	const formatDate = (date) => {
+		return new Date(date).toLocaleString('en-US', {
+			month: 'long',
+			day: 'numeric',
+			year: 'numeric',
+		})
+	}
 
 	const columns = useMemo(
 		() => [
-			// {
-			// 	accessorKey: 'saved',
-			// 	header: '',
-			// 	cell: ({ row }) => {
-			// 		return <button onClick={() => onSaveWord(row.original)}>save</button>
-			// 	}
-			// },
+			{
+				accessorKey: 'saved',
+				header: '',
+				cell: ({ row }) => (
+					!row.original.is_saved
+						? <
+							img onClick={() => onSaveWord(row.original)}
+							src={save}
+							style={{ width: '16px', cursor: 'pointer' }}
+						/>
+						: <img
+							onClick={() => onUnsaveWord(row.original)}
+							src={unsave}
+							className='unsave-icon'
+							style={{ width: '16px', cursor: 'pointer' }}
+						/>
+				)
+			},
 			{
 				accessorKey: 'created_at',
 				header: 'Date',
@@ -115,10 +146,10 @@ const ProgressTable = ({ data }) => {
 				header: 'Acceptance',
 				cell: ({ row }) => <div>{row.original.acceptance + '%'}</div>,
 				sortDescFirst: false,
-			},
-		],
-		[],
+			}
+		], []
 	)
+
 
 	const table = useReactTable({
 		data: filteredData || [],
@@ -169,9 +200,8 @@ const ProgressTable = ({ data }) => {
 					</button>
 
 					<div
-						className={`progress-filter-dropdown ${
-							showFilterDropdown ? 'active-dropdown' : ''
-						}`}
+						className={`progress-filter-dropdown ${showFilterDropdown ? 'active-dropdown' : ''
+							}`}
 					>
 						{/* Dropdown difficulty section */}
 						<h3>Difficulty</h3>
@@ -207,57 +237,61 @@ const ProgressTable = ({ data }) => {
 					<thead>
 						{table.getHeaderGroups().map((headerGroup) => (
 							<tr key={headerGroup.id}>
-								{headerGroup.headers.map((header) => (
-									<th
-										key={header.id}
-										onClick={header.column.getToggleSortingHandler()}
-									>
-										{flexRender(
-											header.column.columnDef.header,
-											header.getContext(),
-										)}
-										{header.column.getIsSorted() === 'asc' ? (
-											<div className='sort-progress'>
-												<img
-													src={upArrow}
-													className='arrow-sort-up select'
-													alt='sort ascending'
-												/>
-												<img
-													src={downArrow}
-													className='arrow-sort-down hide'
-													alt='sort descending'
-												/>
-											</div>
-										) : header.column.getIsSorted() === 'desc' ? (
-											<div className='sort-progress'>
-												<img
-													src={upArrow}
-													className='arrow-sort-up hide'
-													alt='sort ascending'
-												/>
-												<img
-													src={downArrow}
-													className='arrow-sort-down select'
-													alt='sort descending'
-												/>
-											</div>
-										) : (
-											<div className='sort-progress'>
-												<img
-													src={upArrow}
-													className='arrow-sort-up'
-													alt='sort ascending'
-												/>
-												<img
-													src={downArrow}
-													className='arrow-sort-down'
-													alt='sort descending'
-												/>
-											</div>
-										)}
-									</th>
-								))}
+								{headerGroup.headers.map((header) => {
+									return (
+										<th
+											key={header.id}
+											onClick={header.column.getToggleSortingHandler()}
+										>
+											{flexRender(
+												header.column.columnDef.header,
+												header.getContext(),
+											)}
+
+											{header.id === 'saved' ? ''
+												: header.column.getIsSorted() === 'asc' ? (
+													<div className='sort-progress'>
+														<img
+															src={upArrow}
+															className='arrow-sort-up select'
+															alt='sort ascending'
+														/>
+														<img
+															src={downArrow}
+															className='arrow-sort-down hide'
+															alt='sort descending'
+														/>
+													</div>
+												) : header.column.getIsSorted() === 'desc' ? (
+													<div className='sort-progress'>
+														<img
+															src={upArrow}
+															className='arrow-sort-up hide'
+															alt='sort ascending'
+														/>
+														<img
+															src={downArrow}
+															className='arrow-sort-down select'
+															alt='sort descending'
+														/>
+													</div>
+												) : (
+													<div className='sort-progress'>
+														<img
+															src={upArrow}
+															className='arrow-sort-up'
+															alt='sort ascending'
+														/>
+														<img
+															src={downArrow}
+															className='arrow-sort-down'
+															alt='sort descending'
+														/>
+													</div>
+												)}
+										</th>
+									)
+								})}
 							</tr>
 						))}
 					</thead>
