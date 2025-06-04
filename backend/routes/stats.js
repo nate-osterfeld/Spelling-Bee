@@ -25,13 +25,7 @@ router.get('/leaderboard/:page', utils.authMiddleware, async (req, res) => {
 
 router.get('/progress', utils.authMiddleware, async (req, res) => {
 	if (req.user) {
-		const query_SelectProgress =
-			'SELECT word_id, word, level, is_correct, correct, incorrect, created_at ' +
-			'FROM wordshistory ' +
-			'JOIN words ON wordshistory.word_id = words.id ' +
-			'WHERE user_id = $1'
-			
-		let { rows: history } = await pool.query(query_SelectProgress, [req.user.id])
+		let { rows: history } = await pool.query(queries['analytics/get_progress'], [req.user.id])
 		let { rows: accuracy } = await pool.query(queries['analytics/get_weighted_accuracy'])
 
 		const userScore = accuracy.find((score) => score.user_id === req.user.id) // Find weighted accuracy for user
