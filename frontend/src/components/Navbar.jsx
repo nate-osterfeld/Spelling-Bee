@@ -43,13 +43,18 @@ function Navbar() {
 								</Link>
 								<Link
 									onClick={() => forceCloseDropdown()}
-									to={`/account`}>
-									Settings
+									to={`/favorites`}>
+									Favorites
 								</Link>
 								<Link
 									onClick={() => forceCloseDropdown()}
 									to={`/leaderboard`}>
 									Leaderboard
+								</Link>
+								<Link
+									onClick={() => forceCloseDropdown()}
+									to={`/account`}>
+									Settings
 								</Link>
 								<div onClick={handleSignOut} className='signup__signout'>
 									Sign out

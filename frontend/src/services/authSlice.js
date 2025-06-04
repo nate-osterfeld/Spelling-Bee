@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const authApi = createApi({
 	reducerPath: 'auth',
 	baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BACKEND_URL }),
-	tagTypes: ['User', 'Progress'],
+	tagTypes: ['User', 'Progress', 'Saved'],
 	endpoints: (builder) => ({
 		getCurrentUser: builder.query({
 			query: () => ({
@@ -21,10 +21,9 @@ export const authApi = createApi({
 			}),
 			providesTags: ['User', 'Progress'] // Auto refetch if invalidated
 		}),
-		// Eventually change to have a public account page to display (display progress page for now)
 		getUserProgressById: builder.query({
 			query: ({ userId }) => ({
-				url: `/api/stats/u/${userId}`, // Will have username instead of userId
+				url: `/api/stats/u/${userId}`,
 				method: 'GET',
 				credentials: 'include',
 			}),
@@ -43,7 +42,7 @@ export const authApi = createApi({
 				credentials: 'include',
 				body: { username }
 			}),
-			invalidatesTags: ['User'] // Invalidate 'User' tags
+			invalidatesTags: ['User'] // Invalidates 'User' tags
     	}),
 		updatePassword: builder.mutation({
 			query: ({ currentPassword, newPassword }) => ({
@@ -52,7 +51,7 @@ export const authApi = createApi({
 				credentials: 'include',
 				body: { currentPassword, newPassword }
 			}),
-			invalidatesTags: ['User'] // Invalidate 'User' tags
+			invalidatesTags: ['User'] // Invalidates 'User' tags
     	}),
 		getFavoriteWords: builder.query({
 			query: () => ({
@@ -60,6 +59,7 @@ export const authApi = createApi({
 				method: 'GET',
 				credentials: 'include',
 			}),
+			providesTags: ['Saved'] // // Auto refetch if invalidated
 		}),
 		addWordToFavorites: builder.mutation({
 			query: ({ word_id }) => ({
@@ -68,7 +68,7 @@ export const authApi = createApi({
 				credentials: 'include',
 				body: { word_id }
 			}),
-			invalidatesTags: ['Progress'] // Invalidate 'Progress' tags (could be redundant since ui handles)
+			invalidatesTags: ['Saved', 'Progress'] // Invalidate 'Saved' + 'Progress' tags
 		}),
 		removeFromFavorites: builder.mutation({
 			query: ({ word_id }) => ({
@@ -77,7 +77,7 @@ export const authApi = createApi({
 				credentials: 'include',
 				body: { word_id }
 			}),
-			invalidatesTags: ['Progress'] // Invalidate 'Progress' tags (could be redundant since ui handles)
+			invalidatesTags: ['Saved', 'Progress'] // Invalidates 'Saved' + 'Progress' tags
 		})
 	}),
 })
