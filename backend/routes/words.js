@@ -69,4 +69,19 @@ router.post('/save-to-favorites', utils.authMiddleware, async (req, res) => {
 	}
 })
 
+router.post('/unsave-from-favorites', utils.authMiddleware, async (req, res) => {
+	if (!req.user) {
+		return res.status(400).json({ success: false, message: 'Please sign in to save words to your account' })
+	}
+
+	const { word_id } = req.body
+	const query_UnsaveWord = 'DELETE FROM wordssaved WHERE user_id = $1 AND word_id = $2'
+	try {
+		await pool.query(query_UnsaveWord, [req.user.id, word_id])
+		return res.status(200).json({ success: true, message: 'Word unsaved from favorites' })
+	} catch (e) {
+		return res.status(500).json({ success: false, message: 'Unable to unsave word' })
+	}
+})
+
 module.exports = router
