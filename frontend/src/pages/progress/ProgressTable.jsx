@@ -68,13 +68,13 @@ const ProgressTable = ({ data }) => {
 
 	const columns = useMemo(
 		() => [
-			{
-				accessorKey: 'saved',
-				header: '',
-				cell: ({ row }) => {
-					return <button onClick={() => onSaveWord(row.original)}>save</button>
-				}
-			},
+			// {
+			// 	accessorKey: 'saved',
+			// 	header: '',
+			// 	cell: ({ row }) => {
+			// 		return <button onClick={() => onSaveWord(row.original)}>save</button>
+			// 	}
+			// },
 			{
 				accessorKey: 'created_at',
 				header: 'Date',

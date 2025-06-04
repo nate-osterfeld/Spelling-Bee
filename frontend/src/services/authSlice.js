@@ -53,6 +53,13 @@ export const authApi = createApi({
 			}),
 			invalidatesTags: ['User'] // Invalidate 'User' tags
     	}),
+		getFavoriteWords: builder.query({
+			query: () => ({
+				url: 'api/user/saved-words',
+				method: 'GET',
+				credentials: 'include',
+			}),
+		}),
 		addWordToFavorites: builder.mutation({
 			query: ({ word_id }) => ({
 				url: 'api/words/save-to-favorites',
@@ -72,5 +79,6 @@ export const {
 	useGetLeaderboardQuery,
 	useUpdateUsernameMutation,
 	useUpdatePasswordMutation,
+	useGetFavoriteWordsQuery,
 	useAddWordToFavoritesMutation
  } = authApi
