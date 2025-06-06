@@ -25,6 +25,7 @@ CREATE TABLE public.words (
     level VARCHAR(10) NOT NULL,
     correct BIGINT DEFAULT 0 NOT NULL,
     incorrect BIGINT DEFAULT 0 NOT NULL,
+    data JSONB,
     CONSTRAINT words_word_key UNIQUE (word)
 );
 
