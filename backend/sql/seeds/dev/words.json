@@ -1,0 +1,210 @@
+[
+  {
+    "word": "friends",
+    "level": "easy",
+    "data": {
+      "phonetic": "/fr\u025bndz/",
+      "origin": "Old English freond, of Germanic origin.",
+      "meanings": [
+        {
+          "partOfSpeech": "noun",
+          "definitions": [
+            {
+              "definition": "People with whom one has a bond of mutual affection.",
+              "example": "They have been best friends since childhood."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "word": "tutor",
+    "level": "easy",
+    "data": {
+      "phonetic": "/\u02c8tju\u02d0t\u0259/",
+      "origin": "Late Middle English from Latin tutor \u2018a watcher, guardian\u2019.",
+      "meanings": [
+        {
+          "partOfSpeech": "noun",
+          "definitions": [
+            {
+              "definition": "A private teacher, typically one who teaches a single student or a small group.",
+              "example": "She hired a math tutor for extra help."
+            }
+          ]
+        },
+        {
+          "partOfSpeech": "verb",
+          "definitions": [
+            {
+              "definition": "To act as a tutor to someone; to teach.",
+              "example": "He tutored her in French."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "word": "hammer",
+    "level": "easy",
+    "data": {
+      "phonetic": "/\u02c8ham\u0259/",
+      "origin": "Old English hamor, of Germanic origin.",
+      "meanings": [
+        {
+          "partOfSpeech": "noun",
+          "definitions": [
+            {
+              "definition": "A tool with a heavy metal head mounted at right angles at the end of a handle.",
+              "example": "He used a hammer to drive the nail into the wall."
+            }
+          ]
+        },
+        {
+          "partOfSpeech": "verb",
+          "definitions": [
+            {
+              "definition": "To hit or beat something with a hammer or similar object.",
+              "example": "She hammered the metal into shape."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "word": "encouragement",
+    "level": "medium",
+    "data": {
+      "phonetic": "/\u026an\u02c8k\u028cr\u026ad\u0292m\u0259nt/",
+      "origin": "Early 15th century, from Old French.",
+      "meanings": [
+        {
+          "partOfSpeech": "noun",
+          "definitions": [
+            {
+              "definition": "The action of giving someone support, confidence, or hope.",
+              "example": "Your kind words gave me the encouragement I needed."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "word": "catastrophe",
+    "level": "medium",
+    "data": {
+      "phonetic": "/k\u0259\u02c8tastr\u0259fi/",
+      "origin": "Mid 16th century, from Greek katastroph\u0113 \u2018overturning, sudden turn\u2019.",
+      "meanings": [
+        {
+          "partOfSpeech": "noun",
+          "definitions": [
+            {
+              "definition": "An event causing great and often sudden damage or suffering.",
+              "example": "The earthquake was a complete catastrophe for the region."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "word": "ambiguous",
+    "level": "medium",
+    "data": {
+      "phonetic": "/am\u02c8b\u026a\u0261j\u028a\u0259s/",
+      "origin": "Early 16th century, from Latin ambiguus \u2018doubtful\u2019.",
+      "meanings": [
+        {
+          "partOfSpeech": "adjective",
+          "definitions": [
+            {
+              "definition": "Open to more than one interpretation; not having one obvious meaning.",
+              "example": "His reply was ambiguous and left us wondering."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "word": "coalesce",
+    "level": "hard",
+    "data": {
+      "phonetic": "/\u02cck\u0259\u028a\u0259\u02c8l\u025bs/",
+      "origin": "Mid 16th century, from Latin coalescere \u2018grow together\u2019.",
+      "meanings": [
+        {
+          "partOfSpeech": "verb",
+          "definitions": [
+            {
+              "definition": "To come together to form one mass or whole.",
+              "example": "The streams coalesce into a single river."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "word": "amateur",
+    "level": "hard",
+    "data": {
+      "phonetic": "/\u02c8am\u0259t\u0259/",
+      "origin": "Late 18th century, from French, from Latin amator \u2018lover\u2019.",
+      "meanings": [
+        {
+          "partOfSpeech": "noun",
+          "definitions": [
+            {
+              "definition": "A person who engages in a pursuit on an unpaid basis.",
+              "example": "She's an amateur photographer."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "word": "hierarchy",
+    "level": "hard",
+    "data": {
+      "phonetic": "/\u02c8h\u028c\u026a\u0259r\u0251\u02d0ki/",
+      "origin": "Middle English, via Old French and ecclesiastical Latin from Greek hierarkhia.",
+      "meanings": [
+        {
+          "partOfSpeech": "noun",
+          "definitions": [
+            {
+              "definition": "A system in which members are ranked according to status or authority.",
+              "example": "The company had a strict hierarchy of command."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "word": "synonymous",
+    "level": "hard",
+    "data": {
+      "phonetic": "/s\u026a\u02c8n\u0252n\u026am\u0259s/",
+      "origin": "Early 17th century, from synonym + -ous.",
+      "meanings": [
+        {
+          "partOfSpeech": "adjective",
+          "definitions": [
+            {
+              "definition": "Having the same or nearly the same meaning as another word or phrase.",
+              "example": "In this context, \u2018happy\u2019 is synonymous with \u2018joyful\u2019."
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

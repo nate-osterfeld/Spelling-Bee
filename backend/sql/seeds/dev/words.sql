@@ -1,3 +1,4 @@
+-- use words.json + insertWordsDEV.js instead (includes metadata)
 INSERT INTO words (word, level)
 VALUES
   ('friends', 'easy'),
