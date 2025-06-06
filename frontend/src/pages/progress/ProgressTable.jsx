@@ -92,7 +92,8 @@ const ProgressTable = ({ data }) => {
 				accessorKey: 'saved',
 				header: '',
 				cell: ({ row }) => (
-					!row.original.is_saved
+					// Only allow users to save words off their own progress page
+					!row.original.isCurrentUser ? '' : !row.original.is_saved
 						? <
 							img onClick={() => onSaveWord(row.original)}
 							src={save}

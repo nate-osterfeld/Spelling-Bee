@@ -36,6 +36,7 @@ function ProgressPage() {
 
 				return {
 					...obj,
+					isCurrentUser: Boolean(!userId),
 					acceptance: formattedAcceptance,
 					is_correct: formattedCorrectness
 				}
@@ -44,7 +45,7 @@ function ProgressPage() {
 			setProgressData(formattedData)
 			setPercentile(data.percentile ?? 0)
 		}
-	}, [isLoading])
+	}, [data, isLoading])
 
 	return (
 		<>
@@ -56,7 +57,7 @@ function ProgressPage() {
 						<>
 							<h1 className='progress__username'>{data.username}</h1>
 							<ProgressSummary data={progressData} percentile={percentile} />
-							<ProgressTable data={progressData} isLoading={isLoading} error={error} />
+							<ProgressTable data={progressData} />
 						</>
 					)}
 				</div>
