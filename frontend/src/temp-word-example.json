@@ -1,0 +1,34 @@
+{
+  "correct": "5",
+  "data": {
+    "meanings": [
+      {
+        "definitions": [
+          {
+            "definition": "A private teacher, typically one who teaches a single student or a small group.",
+            "example": "She hired a math tutor for extra help."
+          }
+        ],
+        "partOfSpeech": "noun"
+      },
+      {
+        "definitions": [
+          {
+            "definition": "To act as a tutor to someone; to teach.",
+            "example": "He tutored her in French."
+          }
+        ],
+        "partOfSpeech": "verb"
+      }
+    ],
+    "origin": "Late Middle English from Latin tutor \u2018a watcher, guardian\u2019.",
+    "phonetic": "/\u02c8tju\u02d0t\u0259/"
+  },
+  "id": "2",
+  "incorrect": "1",
+  "level": "easy",
+  "saved_at": "2025-06...",
+  "user_id": "2",
+  "word": "tutor",
+  "word_id": "2"
+}
