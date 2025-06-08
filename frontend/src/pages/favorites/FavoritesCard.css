@@ -1,9 +1,21 @@
 .word-container {
+    position: relative;
     padding: 1.2rem;
     margin-bottom: 1.2rem;
     border-radius: 12px;
     background: white;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 6px 0px;
+}
+
+.word-delete {
+    position: absolute;
+    right: 1.2rem;
+    bottom: 1.2rem;
+    cursor: pointer;
+}
+
+.word-delete img {
+    width: 2rem;
 }
 
 /* Word header */
@@ -104,5 +116,6 @@
 .word-origin {
     padding-left: 32px;
     padding-bottom: .5rem;
+    padding-right: 2.2rem;
     color: #5e5e5e;
 }

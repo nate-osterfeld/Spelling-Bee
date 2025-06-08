@@ -1,7 +1,8 @@
 import './FavoritesCard.css'
 import speakerWhite from '../../assets/speakerWhite.svg'
+import trash from '../../assets/trash-icon.svg'
 
-function FavoritesCard({ word }) {
+function FavoritesCard({ word, removeCard }) {
 	const playWord = (word) => {
 		const value = new SpeechSynthesisUtterance(word)
 		window.speechSynthesis.cancel()
@@ -9,7 +10,7 @@ function FavoritesCard({ word }) {
 		document.querySelector('input').focus()
 	}
 
-    function renderWord(wordData) {
+    function renderWordMeanings(wordData) {
 		return wordData.meanings.map((wd) => {
 			return (
 				<>
@@ -57,12 +58,15 @@ function FavoritesCard({ word }) {
 				</div>
 			</div>
 			<div className='word-body'>
-				{renderWord(word.data)}
+				{renderWordMeanings(word.data)}
 				<div className='word-class'>origin</div>
 				<div className='word-origin'>{word.data.origin}</div>
             </div>
-            <div className="word-delete">
-                
+            <div
+                onClick={() => removeCard(word.id)}
+                className="word-delete"
+            >
+                <img src={trash} alt="" />
             </div>
 		</div>
 	)
