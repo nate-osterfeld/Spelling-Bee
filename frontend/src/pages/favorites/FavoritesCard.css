@@ -1,5 +1,6 @@
 .word-container {
     padding: 1.2rem;
+    margin-bottom: 1.2rem;
     border-radius: 12px;
     background: white;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 6px 0px;
@@ -64,8 +65,17 @@
 
 .word-difficulty {
     padding: 6px 22px;
-    border: 2px solid #a8e6cf;
     border-radius: 10px;
+}
+
+.word-difficulty.easy {
+    border: 2px solid #a8e6cf;
+}
+.word-difficulty.medium {
+    border: 2px solid #ffd97d;
+}
+.word-difficulty.hard {
+    border: 2px solid #ff8b94;
 }
 
 /* Word body */

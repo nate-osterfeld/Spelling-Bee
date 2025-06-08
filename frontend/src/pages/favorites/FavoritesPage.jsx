@@ -4,19 +4,22 @@ import FavoritesCard from './FavoritesCard'
 import Loading from '../../components/Loading'
 
 function FavoritesPage() {
-	const { data, error, isLoading } = useGetFavoriteWordsQuery()
-    const example = data?.words[5]
-
-    // console.log('data', data)   
+    const { data, error, isLoading } = useGetFavoriteWordsQuery()
 
     if (isLoading) {
         return <Loading />
+    }
+
+    function renderCards() {
+        return data?.words.map((word, i) => (
+             <FavoritesCard key={i} word={word} />
+        ))
     }
     
     return (
         <div className='favorites__main-section'>
             <div className="favorites__main-wrapper">
-                <FavoritesCard word={example} />
+                {renderCards()}
             </div>
         </div>
     )
