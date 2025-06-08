@@ -63,7 +63,7 @@ export const authApi = createApi({
 		}),
 		addWordToFavorites: builder.mutation({
 			query: ({ word_id }) => ({
-				url: 'api/words/save-to-favorites',
+				url: 'api/words/saved-words',
 				method: 'POST',
 				credentials: 'include',
 				body: { word_id }
@@ -72,10 +72,9 @@ export const authApi = createApi({
 		}),
 		removeFromFavorites: builder.mutation({
 			query: ({ word_id }) => ({
-				url: 'api/words/unsave-from-favorites',
-				method: 'POST',
+				url: `api/words/saved-words/${word_id}`,
+				method: 'DELETE',
 				credentials: 'include',
-				body: { word_id }
 			}),
 			invalidatesTags: ['Saved', 'Progress'] // Invalidates 'Saved' + 'Progress' tags
 		})

@@ -66,12 +66,11 @@ const ProgressTable = ({ data }) => {
 		}
 	}
 
-	const onUnsaveWord = async ({ word_id }) => {
+	const onRemoveWord = async ({ word_id }) => {
 		try {
 			await removeWordFromFavorites({ word_id }).unwrap()
-			setFilteredData(prev =>
-				prev.map(word =>
-					word.word_id === word_id ? { ...word, is_saved: false } : word)
+			setFilteredData((prev) =>
+				prev.map((word) => word.word_id === word_id ? { ...word, is_saved: false } : word)
 			)
 		} catch (e) {
 			// Error handled by RTK Query hook (accessible via `removeWordError.data`)
@@ -100,7 +99,7 @@ const ProgressTable = ({ data }) => {
 							style={{ width: '16px', cursor: 'pointer' }}
 						/>
 						: <img
-							onClick={() => onUnsaveWord(row.original)}
+							onClick={() => onRemoveWord(row.original)}
 							src={unsave}
 							className='unsave-icon'
 							style={{ width: '16px', cursor: 'pointer' }}

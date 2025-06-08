@@ -1,11 +1,12 @@
 import './FavoritesPage.css'
 import { useState, useEffect } from 'react'
-import { useGetFavoriteWordsQuery } from '../../services/authSlice'
+import { useGetFavoriteWordsQuery, useRemoveFromFavoritesMutation } from '../../services/authSlice'
 import FavoritesCard from './FavoritesCard'
 import Loading from '../../components/Loading'
 
 function FavoritesPage() {
-    const { data, error, isLoading } = useGetFavoriteWordsQuery()
+    const { data, error: getWordError, isLoading } = useGetFavoriteWordsQuery()
+    const [removeWordFromFavorites, { error: removeWordError }] = useRemoveFromFavoritesMutation()
     const [words, setWords] = useState([])
 
     useEffect(() => {
@@ -18,14 +19,23 @@ function FavoritesPage() {
 
     function renderCards() {
         if (words) {
+            if (words.length === 0) {
+                return <div>No words to display</div>
+            }
+
             return words.map((word, i) => (
                 <FavoritesCard key={i} word={word} removeCard={removeCard} />
             ))
         }
     }
 
-    function removeCard(id) {
-        setWords((prev) => prev.filter((word) => word.id !== id))
+    async function removeCard(word_id) {
+        try {
+            await removeWordFromFavorites({ word_id }).unwrap()
+            setWords((prev) => prev.filter((word) => word.id !== word_id))
+        } catch (e) {
+			// Error handled by RTK Query hook (accessible via `removeWordError.data`)
+		}
     }
     
     return (

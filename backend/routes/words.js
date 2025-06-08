@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 })
 
 // Save word to user's history
-router.post('/save-to-history', utils.authMiddleware, async (req, res) => {
+router.post('/history', utils.authMiddleware, async (req, res) => {
 	const { isCorrect, word } = req.body
 
 	if (req.user) {
@@ -53,7 +53,7 @@ router.post('/save-to-history', utils.authMiddleware, async (req, res) => {
 	return res.json({ message: 'Please sign in to save words to your history' })
 })
 
-router.post('/save-to-favorites', utils.authMiddleware, async (req, res) => {
+router.post('/saved-words', utils.authMiddleware, async (req, res) => {
 	if (!req.user) {
 		return res.status(400).json({ success: false, message: 'Please sign in to save words to your account' })
 	}
@@ -69,18 +69,20 @@ router.post('/save-to-favorites', utils.authMiddleware, async (req, res) => {
 	}
 })
 
-router.post('/unsave-from-favorites', utils.authMiddleware, async (req, res) => {
+router.delete('/saved-words/:wordId', utils.authMiddleware, async (req, res) => {
 	if (!req.user) {
-		return res.status(400).json({ success: false, message: 'Please sign in to save words to your account' })
+		return res.json({ success: false, message: 'Please sign in to access saved words' })
 	}
 
-	const { word_id } = req.body
-	const query_UnsaveWord = 'DELETE FROM wordssaved WHERE user_id = $1 AND word_id = $2'
+	const { wordId } = req.params
+	console.log('wordId', wordId)
 	try {
-		await pool.query(query_UnsaveWord, [req.user.id, word_id])
-		return res.status(200).json({ success: true, message: 'Word unsaved from favorites' })
+		const query_deleteWord = 'DELETE FROM wordssaved WHERE user_id = $1 AND word_id = $2;'
+		await pool.query(query_deleteWord, [req.user.id, wordId])
+
+		return res.status(200).json({ success: true, message: 'Word removed from favorites' })
 	} catch (e) {
-		return res.status(500).json({ success: false, message: 'Unable to unsave word' })
+		return res.status(500).json({ success: false, message: 'Unable to delete word' })
 	}
 })
 
