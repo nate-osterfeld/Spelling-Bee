@@ -22,6 +22,7 @@
 .word-header {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 /* Word header - Left */
@@ -118,4 +119,15 @@
     padding-bottom: .5rem;
     padding-right: 2.2rem;
     color: #5e5e5e;
+}
+
+@media (max-width: 630px) {
+    .word-header {
+        display: block;
+    }
+
+    .word-header-right {
+        justify-content: center;
+        padding-bottom: 1rem;
+    }
 }
