@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------
-// ------ MAKE SURE TO ONLY USE DEVELOPMENT DATABASE_URL HERE!!! ------
+// ------ MAKE SURE TO ONLY USE DEVELOPMENT DATABASE_URL FROM .ENV!!! ------
 // --------------------------------------------------------------------
 const fs = require('fs');
 const path = require('path');

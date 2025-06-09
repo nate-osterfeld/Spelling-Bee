@@ -59,6 +59,7 @@ VALUES
   ('yacht', 'easy'),
 
   -- Medium
+  ('ambiguous', 'medium'),
   ('abhor', 'medium'),
   ('abhorrent', 'medium'),
   ('accommodate', 'medium'),
@@ -204,7 +205,7 @@ VALUES
   ('syllables', 'medium'),
   ('tachycardia', 'medium'),
   ('tentatively', 'medium'),
-  ('tirade', 'medium'),
+  ('tirade', 'medium'), // -h
   ('transition', 'medium'),
   ('tremolo', 'medium'),
   ('unsheathe', 'medium'),
@@ -355,6 +356,7 @@ VALUES
   ('chauffeur', 'medium'),
 
   -- Hard
+  ('coalesce', 'hard'),
   ('abstraction', 'hard'),
   ('amorphous', 'hard'),
   ('anthropomorphize', 'hard'),
@@ -407,7 +409,6 @@ VALUES
   ('soliloquy', 'hard'),
   ('spontaneity', 'hard'),
   ('superstition', 'hard'),
-  ('symbiotic', 'hard'),
   ('tachycardia', 'hard'),
   ('synonymous', 'hard'),
   ('picturesque', 'hard'),

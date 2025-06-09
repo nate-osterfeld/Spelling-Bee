@@ -40,7 +40,7 @@ function FavoritesCard({ word, removeCard }) {
 						<img className='word__speaker-icon' src={speakerWhite} alt='speaker-icon' />
 					</div>
 					<div className='word-header-main'>
-						<div className='word-word'>{word.word}</div>
+						<div className='word-word'>{word.data.syllables}</div>
 						<div className='word-phonetic'>{word.data.phonetic}</div>
 					</div>
 				</div>

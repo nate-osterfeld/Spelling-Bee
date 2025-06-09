@@ -3,7 +3,8 @@
     "word": "friends",
     "level": "easy",
     "data": {
-      "phonetic": "/fr\u025bndz/",
+      "phonetic": "/frɛndz/",
+      "syllables": "friends",
       "origin": "Old English freond, of Germanic origin.",
       "meanings": [
         {
@@ -22,8 +23,9 @@
     "word": "tutor",
     "level": "easy",
     "data": {
-      "phonetic": "/\u02c8tju\u02d0t\u0259/",
-      "origin": "Late Middle English from Latin tutor \u2018a watcher, guardian\u2019.",
+      "phonetic": "/ˈtjuːtə/",
+      "syllables": "tu·tor",
+      "origin": "Late Middle English from Latin tutor 'a watcher, guardian'.",
       "meanings": [
         {
           "partOfSpeech": "noun",
@@ -50,7 +52,8 @@
     "word": "hammer",
     "level": "easy",
     "data": {
-      "phonetic": "/\u02c8ham\u0259/",
+      "phonetic": "/ˈhamə/",
+      "syllables": "ham·mer",
       "origin": "Old English hamor, of Germanic origin.",
       "meanings": [
         {
@@ -78,7 +81,8 @@
     "word": "encouragement",
     "level": "medium",
     "data": {
-      "phonetic": "/\u026an\u02c8k\u028cr\u026ad\u0292m\u0259nt/",
+      "phonetic": "/ɪnˈkʌrɪdʒmənt/",
+      "syllables": "en·cour·age·ment",
       "origin": "Early 15th century, from Old French.",
       "meanings": [
         {
@@ -97,8 +101,9 @@
     "word": "catastrophe",
     "level": "medium",
     "data": {
-      "phonetic": "/k\u0259\u02c8tastr\u0259fi/",
-      "origin": "Mid 16th century, from Greek katastroph\u0113 \u2018overturning, sudden turn\u2019.",
+      "phonetic": "/kəˈtastrəfi/",
+      "syllables": "ca·tas·tro·phe",
+      "origin": "Mid 16th century, from Greek katastrophē 'overturning, sudden turn'.",
       "meanings": [
         {
           "partOfSpeech": "noun",
@@ -116,8 +121,9 @@
     "word": "ambiguous",
     "level": "medium",
     "data": {
-      "phonetic": "/am\u02c8b\u026a\u0261j\u028a\u0259s/",
-      "origin": "Early 16th century, from Latin ambiguus \u2018doubtful\u2019.",
+      "phonetic": "/amˈbɪɡjʊəs/",
+      "syllables": "am·big·u·ous",
+      "origin": "Early 16th century, from Latin ambiguus 'doubtful'.",
       "meanings": [
         {
           "partOfSpeech": "adjective",
@@ -135,8 +141,9 @@
     "word": "coalesce",
     "level": "hard",
     "data": {
-      "phonetic": "/\u02cck\u0259\u028a\u0259\u02c8l\u025bs/",
-      "origin": "Mid 16th century, from Latin coalescere \u2018grow together\u2019.",
+      "phonetic": "/ˌkəʊəˈlɛs/",
+      "syllables": "co·a·lesce",
+      "origin": "Mid 16th century, from Latin coalescere 'grow together'.",
       "meanings": [
         {
           "partOfSpeech": "verb",
@@ -154,8 +161,9 @@
     "word": "amateur",
     "level": "hard",
     "data": {
-      "phonetic": "/\u02c8am\u0259t\u0259/",
-      "origin": "Late 18th century, from French, from Latin amator \u2018lover\u2019.",
+      "phonetic": "/ˈamətə/",
+      "syllables": "am·a·teur",
+      "origin": "Late 18th century, from French, from Latin amator 'lover'.",
       "meanings": [
         {
           "partOfSpeech": "noun",
@@ -173,7 +181,8 @@
     "word": "hierarchy",
     "level": "hard",
     "data": {
-      "phonetic": "/\u02c8h\u028c\u026a\u0259r\u0251\u02d0ki/",
+      "phonetic": "/ˈhʌɪərɑːki/",
+      "syllables": "hi·er·ar·chy",
       "origin": "Middle English, via Old French and ecclesiastical Latin from Greek hierarkhia.",
       "meanings": [
         {
@@ -192,7 +201,8 @@
     "word": "synonymous",
     "level": "hard",
     "data": {
-      "phonetic": "/s\u026a\u02c8n\u0252n\u026am\u0259s/",
+      "phonetic": "/sɪˈnɒnɪməs/",
+      "syllables": "syn·on·y·mous",
       "origin": "Early 17th century, from synonym + -ous.",
       "meanings": [
         {
@@ -200,7 +210,7 @@
           "definitions": [
             {
               "definition": "Having the same or nearly the same meaning as another word or phrase.",
-              "example": "In this context, \u2018happy\u2019 is synonymous with \u2018joyful\u2019."
+              "example": "In this context, 'happy' is synonymous with 'joyful'."
             }
           ]
         }
